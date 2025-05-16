@@ -1,0 +1,33 @@
+{
+  "layers": [
+    {
+      "id": "os_spot_height",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "os_spot_height",
+      "maxzoom": 16,
+      "layout": {
+        "text-size": 10,
+        "text-field": "{height}",
+        "icon-image": "os_spot_height",
+        "symbol-placement": "point",
+        "text-variable-anchor": [
+          "top-right",
+          "bottom-right",
+          "top-left",
+          "bottom-left"
+        ],
+        "text-radial-offset": 0.4,
+        "text-font": [
+          "Noto Sans Regular"
+        ]
+      },
+      "paint": {
+        "text-color": "#986300",
+        "text-halo-color": "rgba(255, 255, 255, .8)",
+        "text-halo-width": 1
+      },
+      "order": 206
+    }
+  ]
+}

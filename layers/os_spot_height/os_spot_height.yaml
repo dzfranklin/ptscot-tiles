@@ -1,0 +1,14 @@
+layer:
+  id: "os_spot_height"
+  description: |
+    [OS VectorMap District Spot Height](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/spotheight)
+  buffer_size: 64
+  srs: "epsg:3857"
+  fields:
+    height: Height in meters
+    height_ft: Height in feet
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry, height, height_ft FROM layer_os_spot_height(!bbox!, z(!scale_denominator!))) as t
+schema:
+  - ./os_spot_height.sql

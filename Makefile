@@ -80,6 +80,7 @@ PGDATABASE := $(or $(PGDATABASE),$(shell (. .env; echo $${PGDATABASE})),$(POSTGR
 PGUSER := $(or $(PGUSER),$(shell (. .env; echo $${PGUSER})),$(POSTGRES_USER),$(shell (. .env; echo $${POSTGRES_USER})),postgres)
 PGPASSWORD := $(or $(PGPASSWORD),$(shell (. .env; echo $${PGPASSWORD})),$(POSTGRES_PASSWORD),$(shell (. .env; echo $${POSTGRES_PASSWORD})),postgres)
 
+OGR2OGR_PG_OPTS := PG:"host=$(PGHOST) port=$(PGPORT) dbname=$(PGDATABASE) user=$(PGUSER) password=$(PGPASSWORD)"
 #
 # Determine area to work on
 # If $(area) parameter is not set, and only one *.osm.pbf file is found in ./data, use it as $(area).
@@ -570,6 +571,53 @@ generate-devdoc: init-dirs
 .PHONY: bash
 bash: init-dirs
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools bash
+
+.PHONY: import-os
+import-os: import-os-terr50 import-os-vmdvec
+
+.PHONY: download-os-vmdvec
+download-os-vmdvec: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_vmdvec" ] && mkdir /export/os_vmdvec && \
+	echo "Downloading OS VectorMap District..." && wget -qO /export/os_vmdvec/vmdvec_gb.zip --show-progress \
+    "https://api.os.uk/downloads/v1/products/VectorMapDistrict/downloads?area=GB&format=GeoPackage&redirect" && \
+	echo "Unzipping OS VectorMap District..." && unzip -q /export/os_vmdvec/vmdvec_gb.zip -d /export/os_vmdvec && rm /export/os_vmdvec/vmdvec_gb.zip || \
+	echo "OS VectorMap District already exists."'
+
+.PHONY: download-os-terr50
+download-os-terr50: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_terr50" ] && mkdir /export/os_terr50 && \
+	echo "Downloading OS Terrain50..." && wget -qO /export/os_terr50/terr50_gpkg_gb.zip --show-progress \
+	"https://api.os.uk/downloads/v1/products/Terrain50/downloads?area=GB&format=GeoPackage&redirect" && \
+	echo "Unzipping OS Terrain50..." && unzip -q /export/os_terr50/terr50_gpkg_gb.zip -d /export/os_terr50 && rm /export/os_terr50/terr50_gpkg_gb.zip || \
+	echo "OS Terrain50 already exists."'
+
+.PHONY: import-os-vmdvec
+import-os-vmdvec: download-os-vmdvec
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
+	psql.sh -c "DROP TABLE IF EXISTS os_vmdvec_spotheight; DROP TABLE IF EXISTS os_vmdvec_ornament;" && \
+	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_OPTS) /export/os_vmdvec/Data/vmdvec_gb.gpkg \
+		-nln os_vmdvec_spotheight -t_srs epsg:3857 \
+		-sql "select round(height) as height, round(height * 3.28084) as height_ft, geometry from spotheight"  && \
+	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_OPTS) /export/os_vmdvec/Data/vmdvec_gb.gpkg \
+		-nln os_vmdvec_ornament -t_srs epsg:3857 \
+		-sql "SELECT geometry FROM ornament" \
+	'
+
+.PHONY: import-os-terr50
+import-os-terr50: download-os-terr50
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
+	psql.sh -c "DROP TABLE IF EXISTS os_terr50_contour_line;" && \
+	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_OPTS) /export/os_terr50/Data/terr50_gb.gpkg \
+		-nln os_terr50_contour_line -t_srs epsg:3857 \
+		-sql "SELECT geometry, cast(property_value as real) AS height, \
+		CASE \
+			WHEN mod(property_value, 100) = 0 THEN 10 \
+			WHEN mod(property_value, 50) = 0 THEN 5 \
+			WHEN mod(property_value, 20) = 0 THEN 2 \
+			WHEN mod(property_value, 10) = 0 THEN 1 \
+			ELSE 0 \
+		END AS nth_line \
+		FROM contour_line"'
 
 .PHONY: import-wikidata
 import-wikidata: init-dirs

@@ -15,8 +15,5 @@
     }
   },
   "data": {
-    "openmaptiles": {
-      "mbtiles": "/data/tiles.mbtiles"
-    }
   }
 }
