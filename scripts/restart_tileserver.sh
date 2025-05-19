@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euox pipefail
-make stop-tileserver && make start-tileserver
+docker compose stop tileserver-gl && docker compose up -d tileserver-gl
