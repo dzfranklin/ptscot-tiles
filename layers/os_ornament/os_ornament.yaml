@@ -3,7 +3,6 @@ layer:
   description: |
     [OS VectorMap District Ornament](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/ornament)
   buffer_size: 64
-  srs: "epsg:3857"
   fields: []
   datasource:
     geometry_field: geometry

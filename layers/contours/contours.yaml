@@ -2,7 +2,6 @@ layer:
   id: "contours"
   description: Contour lines
   buffer_size: 4
-  srs: "epsg:3857"
   fields:
     height: Height in meters
     nth_line: The order/thickness of the contour line

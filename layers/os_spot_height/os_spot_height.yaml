@@ -3,7 +3,6 @@ layer:
   description: |
     [OS VectorMap District Spot Height](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/spotheight)
   buffer_size: 64
-  srs: "epsg:3857"
   fields:
     height: Height in meters
     height_ft: Height in feet
