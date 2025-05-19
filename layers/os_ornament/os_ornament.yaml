@@ -1,0 +1,12 @@
+layer:
+  id: "os_ornament"
+  description: |
+    [OS VectorMap District Ornament](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/ornament)
+  buffer_size: 64
+  srs: "epsg:3857"
+  fields: []
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry FROM layer_os_ornament(!bbox!, z(!scale_denominator!))) as t
+schema:
+  - ./os_ornament.sql

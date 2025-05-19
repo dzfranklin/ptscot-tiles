@@ -1,0 +1,16 @@
+{
+  "layers": [
+    {
+      "id": "os_ornament",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "os_ornament",
+      "minzoom": 11,
+      "maxzoom": 19,
+      "paint": {
+        "fill-color": "#9a9a90"
+      },
+      "order": 210
+    }
+  ]
+}

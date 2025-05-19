@@ -1,1 +1,19 @@
 Import DOBIH
+Make a python script to insert a gap in the order
+Position new entries in correct place in order
+
+Lower than zoom 10 it would be nice to show simple poly hillshading like outdooractive does
+
+Consider using OS data for everything walkhighlands does:
+https://www.walkhighlands.co.uk/news/walkhighlands-map-server-and-tiles/
+    OS data © Crown copyright and database right (2022)
+    This data is used for the contours, height data, all topographic data (crags etc), woodland & forests, water
+    features, settlements, roads, railways. The source data is available from the OS under the Open Government Licence
+    (OGL).
+
+    © OpenStreetMap contributors (2022)
+    This data is used for (most) paths, tracks, public toilets, footbridges, fords, wind turbines on these maps. The
+    source data is available from the OSM under the Open Database License (ODbL). As footpaths are crowd-sourced by
+    OpenStreetMap, they may not always exist on the ground.
+
+I think OS OpenMap Local is more detailed for the fewer features it has: https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-openmap-local/os-openmap-local-technical-specification/feature-types

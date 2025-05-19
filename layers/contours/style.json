@@ -1,0 +1,141 @@
+{
+  "layers": [
+    {
+      "id": "contour_minor",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "contours",
+      "minzoom": 11,
+      "maxzoom": 19,
+      "filter": [
+        "all",
+        [
+          "<",
+          [
+            "get",
+            "nth_line"
+          ],
+          10
+        ],
+        [
+          "case",
+          [
+            ">=",
+            [
+              "zoom"
+            ],
+            13
+          ],
+          true,
+          [
+            ">=",
+            [
+              "zoom"
+            ],
+            12
+          ],
+          [
+            ">=",
+            [
+              "get",
+              "nth_line"
+            ],
+            2
+          ],
+          [
+            ">=",
+            [
+              "zoom"
+            ],
+            11
+          ],
+          [
+            ">=",
+            [
+              "get",
+              "nth_line"
+            ],
+            5
+          ],
+          false
+        ]
+      ],
+      "paint": {
+        "line-color": "#986300",
+        "line-opacity": 0.6,
+        "line-width": 1
+      },
+      "order": 206
+    },
+    {
+      "id": "contour_major",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "contours",
+      "minzoom": 10,
+      "maxzoom": 19,
+      "filter": [
+        ">=",
+        [
+          "get",
+          "nth_line"
+        ],
+        5
+      ],
+      "paint": {
+        "line-color": "#986300",
+        "line-opacity": 0.5,
+        "line-width": [
+          "step",
+          [
+            "zoom"
+          ],
+          1,
+          12,
+          2
+        ]
+      },
+      "order": 207
+    },
+    {
+      "id": "contour_label",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "contours",
+      "maxzoom": 19,
+      "filter": [
+        "all",
+        [
+          ">=",
+          [
+            "get",
+            "nth_line"
+          ],
+          5
+        ],
+        [
+          ">=",
+          [
+            "zoom"
+          ],
+          10
+        ]
+      ],
+      "layout": {
+        "symbol-placement": "line",
+        "symbol-spacing": 250,
+        "text-size": 10,
+        "text-field": "{height}",
+        "text-font": [
+          "Noto Sans Regular"
+        ]
+      },
+      "paint": {
+        "text-color": "#986300",
+        "text-halo-color": "rgba(255, 255, 255, .8)",
+        "text-halo-width": 2
+      },
+      "order": 208
+    }
+  ]
+}
