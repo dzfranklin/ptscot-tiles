@@ -1,6 +1,4 @@
 Import DOBIH
-Make a python script to insert a gap in the order
-Position new entries in correct place in order
 
 Lower than zoom 10 it would be nice to show simple poly hillshading like outdooractive does
 
