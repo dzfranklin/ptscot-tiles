@@ -1,90 +1,11 @@
 {
   "layers": [
     {
-      "id": "landcover_classes",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "landcover",
-      "maxzoom": 13,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": [
-          "match",
-          [
-            "get",
-            "class"
-          ],
-          "farmland",
-          "#eef0d5",
-          "wood",
-          "#add19e",
-          "rock",
-          "#eee5dc",
-          "sand",
-          "#f5e9c6",
-          "wetland",
-          "#add19e",
-          "#000"
-        ],
-        "fill-opacity": {
-          "stops": [
-            [
-              7,
-              0.5
-            ],
-            [
-              10,
-              1
-            ]
-          ]
-        },
-        "fill-antialias": false
-      },
-      "metadata": {},
-      "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "farmland",
-          "wood",
-          "rock",
-          "wetland",
-          "sand"
-        ]
-      ],
-      "order": 4
-    },
-    {
-      "id": "landcover_class_outline",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "landcover",
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "#c7c9ae",
-        "line-width": 0.5
-      },
-      "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "farmland"
-        ]
-      ],
-      "order": 5
-    },
-    {
       "id": "landcover_park",
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "landcover",
-      "minzoom": 13,
+      "minzoom": 10,
       "layout": {
         "visibility": "visible"
       },
@@ -100,14 +21,14 @@
           "park"
         ]
       ],
-      "order": 6
+      "order": 4
     },
     {
       "id": "landcover_subclasses",
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "landcover",
-      "minzoom": 13,
+      "minzoom": 10,
       "layout": {
         "visibility": "visible"
       },
@@ -128,28 +49,16 @@
           "#d6d99f",
           "dune",
           "#f5e9c6",
-          "scrub",
-          "#c8d7ab",
           "farm",
           "#f5dcba",
           "farmland",
           "#eef0d5",
           "flowerbed",
           "#cdebb0",
-          "forest",
-          "#add19e",
-          "grass",
-          "#cdebb0",
-          "grassland",
-          "#cdebb0",
           "golf_course",
           "#def6c0",
-          "heath",
-          "#d6d99f",
           "mangrove",
           "#c8d7ab",
-          "meadow",
-          "#cdebb0",
           "orchard",
           "#aedfa3",
           "park",
@@ -166,8 +75,6 @@
           "#cdebb0",
           "sand",
           "#f5e9c6",
-          "scree",
-          "#eee5dc",
           "swamp",
           "#add19e",
           "tidalflat",
@@ -179,8 +86,6 @@
           "wet_meadow",
           "#cdebb0",
           "wetland",
-          "#add19e",
-          "wood",
           "#add19e",
           "marsh",
           "#ff0",
@@ -197,42 +102,31 @@
           "bare_rock",
           "beach",
           "dune",
-          "scrub",
           "farm",
           "farmland",
           "flowerbed",
-          "forest",
           "garden",
-          "grass",
-          "grassland",
           "golf_course",
-          "heath",
-          "meadow",
           "orchard",
           "plant_nursery",
           "recreation_ground",
           "reedbed",
           "saltmarsh",
           "sand",
-          "scree",
-          "swamp",
           "tidalflat",
           "tundra",
           "village_green",
-          "vineyard",
-          "wet_meadow",
-          "wetland",
-          "wood"
+          "vineyard"
         ]
       ],
-      "order": 7
+      "order": 5
     },
     {
       "id": "landcover_subclass_patterns",
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "landcover",
-      "minzoom": 13,
+      "minzoom": 10,
       "layout": {
         "visibility": "visible"
       },
@@ -253,10 +147,10 @@
           0.6,
           "garden",
           0.6,
-          "scree",
-          0.3,
           "wood",
           0.4,
+          "wetland",
+          0.5,
           1
         ],
         "fill-pattern": [
@@ -325,13 +219,9 @@
           "flowerbed",
           "forest",
           "garden",
-          "grass",
-          "grassland",
           "golf_course",
-          "heath",
           "mangrove",
           "marsh",
-          "meadow",
           "orchard",
           "park",
           "plant_nursery",
@@ -345,11 +235,10 @@
           "village_green",
           "vineyard",
           "wet_meadow",
-          "wetland",
-          "wood"
+          "wetland"
         ]
       ],
-      "order": 8
+      "order": 7
     },
     {
       "id": "landcover_subclass_outline",
@@ -400,7 +289,7 @@
           "recreation_ground"
         ]
       ],
-      "order": 9
+      "order": 8
     },
     {
       "id": "landcover_ice",
@@ -421,7 +310,7 @@
           "ice"
         ]
       ],
-      "order": 10
+      "order": 9
     },
     {
       "id": "landcover_ice_outline",
@@ -473,7 +362,7 @@
           "ice"
         ]
       ],
-      "order": 11
+      "order": 10
     }
   ]
 }

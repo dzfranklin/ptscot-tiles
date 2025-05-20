@@ -1,0 +1,16 @@
+{
+  "layers": [
+    {
+      "id": "os_woodland",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "os_woodland",
+      "minzoom": 10,
+      "paint": {
+        "fill-color": "#dbe9b9",
+        "fill-antialias": true
+      },
+      "order": 6
+    }
+  ]
+}

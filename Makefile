@@ -612,8 +612,8 @@ import-os-vmdvec: download-os-vmdvec
 		nln="os_vmdvec_""$$table"; \
 		echo "Importing $$table to $$nln..."; \
 		ogr2ogr $(OGR2OGR_PG_DST) /export/os_vmdvec/Data/vmdvec_gb.gpkg "$$table" \
-			-nln "os_vmdvec_""$$table" -overwrite -t_srs epsg:3857 \
-			-spat_srs epsg:3857 -spat -10 54.56 0 61; \
+			-nln "$$nln" -overwrite -t_srs epsg:3857 \
+			-spat_srs epsg:4326 -spat -10 54.56 0 61; \
 	done; \
 	echo "Imported OS VectorMap District." \
 	'
@@ -621,18 +621,16 @@ import-os-vmdvec: download-os-vmdvec
 .PHONY: import-os-terr50
 import-os-terr50: download-os-terr50
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
-	psql.sh -c "DROP TABLE IF EXISTS os_terr50_contour_line;" && \
-	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_DST) /export/os_terr50/Data/terr50_gb.gpkg \
-		-nln os_terr50_contour_line -t_srs epsg:3857 \
-		-sql "SELECT geometry, cast(property_value as real) AS height, \
-		CASE \
-			WHEN mod(property_value, 100) = 0 THEN 10 \
-			WHEN mod(property_value, 50) = 0 THEN 5 \
-			WHEN mod(property_value, 20) = 0 THEN 2 \
-			WHEN mod(property_value, 10) = 0 THEN 1 \
-			ELSE 0 \
-		END AS nth_line \
-		FROM contour_line"'
+	echo "Importing OS Terrain50 (restricted to features intersecting Scotland)"; \
+	for table in $$(sqlite3 /export/os_terr50/Data/terr50_gb.gpkg "select table_name from gpkg_contents"); do \
+		nln="os_terr50_""$$table"; \
+		echo "Importing $$table to $$nln..."; \
+		ogr2ogr $(OGR2OGR_PG_DST) /export/os_terr50/Data/terr50_gb.gpkg "$$table" \
+			-nln "$$nln" -overwrite -t_srs epsg:3857 \
+			-spat_srs epsg:4326 -spat -10 54.56 0 61; \
+	done; \
+	echo "Imported OS Terrain50." \
+	'
 
 .PHONY: import-wikidata
 import-wikidata: init-dirs

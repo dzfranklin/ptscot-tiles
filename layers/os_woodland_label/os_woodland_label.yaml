@@ -1,0 +1,20 @@
+layer:
+  id: "os_woodland_label"
+  description: |
+    [OS VectorMap Named Place](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/namedplace) Woodland Or Forest
+  buffer_size: 4
+  fields:
+    distinctive_name: |
+      The settlement name or geographic place name.
+      When a place is dual named, the Welsh or Gaelic name is presented first, followed by a space, a forward slash,
+      a space and then the English name.
+    font_height: |
+      A suggested text size to use for placing the distinctiveName as cartographic text.
+      For most names the text size is proportional to the size of the area to which the name applies.
+      For valleys the text size is based on the valley length and for hills/mountains, the text size is based on the
+      height of the summit. [Valid values](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/code-lists/fontheightclassification)
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry, distinctive_name, font_height FROM layer_os_woodland_label(!bbox!, z(!scale_denominator!))) as t
+schema:
+  - ./os_woodland_label.sql

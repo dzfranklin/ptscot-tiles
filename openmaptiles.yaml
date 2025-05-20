@@ -4,6 +4,7 @@ tileset:
     - layers/waterway/waterway.yaml
     - layers/landcover/landcover.yaml
     - layers/landuse/landuse.yaml
+    - layers/os_woodland/os_woodland.yaml
 #    - layers/mountain_peak/mountain_peak.yaml
     - layers/contours/contours.yaml
     - layers/os_ornament/os_ornament.yaml
@@ -20,6 +21,7 @@ tileset:
     - layers/poi/poi.yaml
     - layers/aerodrome_label/aerodrome_label.yaml
     - layers/grid/grid.yaml
+    - layers/os_woodland_label/os_woodland_label.yaml
   name: OpenMapTiles
   version: 3.15.0
   id: openmaptiles
