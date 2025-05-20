@@ -1,14 +1,18 @@
 Import DOBIH
 
 OS VectorMap:
-       woodland: Add OS woodland b/c it shows corridors better than OSM
-       named place: landform?, woodland or forest, hydrography, landcover?
-       administrative_boundary?
-       surface_water_line & surface_water_area
+       surface_water_line & surface_water_area (unfortunately some stuff tagged as line in osm is area in os, so need both)
 
 How to get park boundaries?
 
 Lower than zoom 10 it would be nice to show simple poly hillshading like outdooractive does
+plus contours filled categorically like os does for the 125k product
+
+show wind turbines at low zoom (below 10?)
+
+increase visibility of pylons
+
+paths
 
 Consider using OS data for everything walkhighlands does:
 https://www.walkhighlands.co.uk/news/walkhighlands-map-server-and-tiles/

@@ -47,7 +47,7 @@
         "text-halo-color": "rgba(255, 255, 255, .8)",
         "text-halo-width": 1
       },
-      "order": 208
+      "order": 210
     },
     {
       "id": "mountain_peak_volcano",
@@ -95,7 +95,7 @@
         "text-halo-color": "rgba(255, 255, 255, .8)",
         "text-halo-width": 1
       },
-      "order": 209
+      "order": 211
     }
   ]
 }

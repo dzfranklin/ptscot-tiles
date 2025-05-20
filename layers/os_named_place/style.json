@@ -1,0 +1,124 @@
+{
+  "layers": [
+    {
+      "id": "os_named_place",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "os_named_place",
+      "minzoom": 10,
+      "layout": {
+        "text-size": [
+          "match",
+          [
+            "get",
+            "font_height"
+          ],
+          "Extra Large",
+          13,
+          "Large",
+          11,
+          "Medium",
+          10,
+          10
+        ],
+        "text-field": "{distinctive_name}",
+        "text-font": [
+          "match",
+          [
+            "get",
+            "font_height"
+          ],
+          "Extra Large",
+          [
+            "literal",
+            [
+              "Noto Sans Bold"
+            ]
+          ],
+          "Large",
+          [
+            "literal",
+            [
+              "Noto Sans Bold"
+            ]
+          ],
+          "Medium",
+          [
+            "literal",
+            [
+              "Noto Sans Regular"
+            ]
+          ],
+          [
+            "literal",
+            [
+              "Noto Sans Regular"
+            ]
+          ]
+        ],
+        "text-rotation-alignment": "map",
+        "text-rotate": [
+          "get",
+          "text_orientation"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255, 255, 255, .8)",
+        "text-halo-width": [
+          "match",
+          [
+            "get",
+            "font_height"
+          ],
+          "Extra Large",
+          2.3,
+          "Large",
+          1.9,
+          "Medium",
+          1.5,
+          1.3
+        ]
+      },
+      "filter": [
+        "match",
+        [
+          "get",
+          "font_height"
+        ],
+        "Extra Large",
+        [
+          ">=",
+          [
+            "zoom"
+          ],
+          9
+        ],
+        "Large",
+        [
+          ">=",
+          [
+            "zoom"
+          ],
+          10
+        ],
+        "Medium",
+        [
+          ">=",
+          [
+            "zoom"
+          ],
+          11
+        ],
+        [
+          ">=",
+          [
+            "zoom"
+          ],
+          12
+        ]
+      ],
+      "order": 214
+    }
+  ]
+}

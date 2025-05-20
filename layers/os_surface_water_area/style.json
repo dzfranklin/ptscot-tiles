@@ -1,0 +1,16 @@
+{
+  "layers": [
+    {
+      "id": "os_surface_water_area",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "os_surface_water_area",
+      "min-zoom": 10,
+      "paint": {
+        "fill-color": "#0dacef",
+        "fill-outline-color": "#0daaed"
+      },
+      "order": 14
+    }
+  ]
+}

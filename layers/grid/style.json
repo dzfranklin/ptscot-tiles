@@ -20,7 +20,7 @@
         "line-opacity": 0.15,
         "line-width": 3
       },
-      "order": 157
+      "order": 158
     },
     {
       "id": "grid_5km",
@@ -42,7 +42,7 @@
         "line-opacity": 0.3,
         "line-width": 3
       },
-      "order": 158
+      "order": 159
     },
     {
       "id": "grid_1km",
@@ -59,11 +59,11 @@
         "1km"
       ],
       "paint": {
-        "line-color": "#11b1ef",
-        "line-opacity": 0.5,
+        "line-color": "#999d9f",
+        "line-opacity": 0.8,
         "line-width": 1
       },
-      "order": 159
+      "order": 160
     }
   ]
 }

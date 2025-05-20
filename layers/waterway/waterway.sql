@@ -376,27 +376,27 @@ FROM (
          -- etldoc: waterway_z10 ->  layer_waterway:z10
          SELECT *
          FROM waterway_z10
-         WHERE zoom_level = 10
+         WHERE zoom_level = 10 AND is_bridge OR is_tunnel
          UNION ALL
          -- etldoc: waterway_z11 ->  layer_waterway:z11
          SELECT *
          FROM waterway_z11
-         WHERE zoom_level = 11
+         WHERE zoom_level = 11 AND is_bridge OR is_tunnel
          UNION ALL
          -- etldoc: waterway_z12 ->  layer_waterway:z12
          SELECT *
          FROM waterway_z12
-         WHERE zoom_level = 12
+         WHERE zoom_level = 12 AND is_bridge OR is_tunnel
          UNION ALL
          -- etldoc: waterway_z13 ->  layer_waterway:z13
          SELECT *
          FROM waterway_z13
-         WHERE zoom_level = 13
+         WHERE zoom_level = 13 AND is_bridge OR is_tunnel
          UNION ALL
          -- etldoc: waterway_z14 ->  layer_waterway:z14
          SELECT *
          FROM waterway_z14
-         WHERE zoom_level >= 14
+         WHERE zoom_level >= 14 AND is_bridge OR is_tunnel
      ) AS zoom_levels
 WHERE geometry && bbox;
 $$ LANGUAGE SQL STABLE

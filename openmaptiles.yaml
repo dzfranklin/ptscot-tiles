@@ -2,6 +2,7 @@ tileset:
   layers:
     - layers/water/water.yaml
     - layers/waterway/waterway.yaml
+    - layers/os_surface_water_line/os_surface_water_line.yaml
     - layers/landcover/landcover.yaml
     - layers/landuse/landuse.yaml
     - layers/os_woodland/os_woodland.yaml
@@ -21,7 +22,7 @@ tileset:
     - layers/poi/poi.yaml
     - layers/aerodrome_label/aerodrome_label.yaml
     - layers/grid/grid.yaml
-    - layers/os_woodland_label/os_woodland_label.yaml
+    - layers/os_named_place/os_named_place.yaml
   name: OpenMapTiles
   version: 3.15.0
   id: openmaptiles

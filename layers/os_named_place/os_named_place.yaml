@@ -1,7 +1,7 @@
 layer:
-  id: "os_woodland_label"
+  id: "os_named_place"
   description: |
-    [OS VectorMap Named Place](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/namedplace) Woodland Or Forest
+    [OS VectorMap Named Place](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/namedplace)
   buffer_size: 4
   fields:
     distinctive_name: |
@@ -13,8 +13,11 @@ layer:
       For most names the text size is proportional to the size of the area to which the name applies.
       For valleys the text size is based on the valley length and for hills/mountains, the text size is based on the
       height of the summit. [Valid values](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/code-lists/fontheightclassification)
+    text_orientation: |
+      Suggested text orientation (in degrees) to use for cartographic text placement of valley names,
+      names of stretches of water and estuaries.
   datasource:
     geometry_field: geometry
-    query: (SELECT geometry, distinctive_name, font_height FROM layer_os_woodland_label(!bbox!, z(!scale_denominator!))) as t
+    query: (SELECT geometry, distinctive_name, font_height, text_orientation FROM layer_os_named_place(!bbox!, z(!scale_denominator!))) as t
 schema:
-  - ./os_woodland_label.sql
+  - ./os_named_place.sql

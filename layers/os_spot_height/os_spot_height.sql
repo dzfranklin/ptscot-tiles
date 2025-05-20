@@ -12,7 +12,7 @@ SELECT geometry, round(height) as height, round(height * 3.28084) as height_ft
 FROM os_vmdvec_spotheight
 WHERE geometry && bbox
   AND zoom_level >= 11
-ORDER BY height;
+ORDER BY height DESC, fid;
 $$
     LANGUAGE SQL
     STABLE

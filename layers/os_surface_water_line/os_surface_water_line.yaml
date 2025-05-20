@@ -1,0 +1,11 @@
+layer:
+  id: "os_surface_water_line"
+  description: |
+    [OS VectorMap Surface Water Line](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/surfacewater_line)
+  buffer_size: 4
+  fields: []
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry FROM layer_os_surface_water_line(!bbox!, z(!scale_denominator!))) as t
+schema:
+  - ./os_surface_water_line.sql
