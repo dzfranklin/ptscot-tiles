@@ -80,7 +80,7 @@ PGDATABASE := $(or $(PGDATABASE),$(shell (. .env; echo $${PGDATABASE})),$(POSTGR
 PGUSER := $(or $(PGUSER),$(shell (. .env; echo $${PGUSER})),$(POSTGRES_USER),$(shell (. .env; echo $${POSTGRES_USER})),postgres)
 PGPASSWORD := $(or $(PGPASSWORD),$(shell (. .env; echo $${PGPASSWORD})),$(POSTGRES_PASSWORD),$(shell (. .env; echo $${POSTGRES_PASSWORD})),postgres)
 
-OGR2OGR_PG_OPTS := PG:"host=$(PGHOST) port=$(PGPORT) dbname=$(PGDATABASE) user=$(PGUSER) password=$(PGPASSWORD)"
+OGR2OGR_PG_DST := PG:"host=$(PGHOST) port=$(PGPORT) dbname=$(PGDATABASE) user=$(PGUSER) password=$(PGPASSWORD)"
 #
 # Determine area to work on
 # If $(area) parameter is not set, and only one *.osm.pbf file is found in ./data, use it as $(area).
@@ -572,6 +572,19 @@ generate-devdoc: init-dirs
 bash: init-dirs
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools bash
 
+.PHONY: import-british-national-grids
+import-british-national-grids: download-british-national-grids
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c \
+	'ogr2ogr -f "PostgreSQL" -overwrite $(OGR2OGR_PG_DST) /export/british_national_grids/os_bng_grids.gpkg -t_srs epsg:3857'
+
+.PHONY: download-british-national-grids
+download-british-national-grids: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/british_national_grids" ] && mkdir /export/british_national_grids && \
+	echo "Downloading British National Grids..." && wget -qO /export/british_national_grids/os_bng_grids.gpkg.zip --show-progress \
+	"https://github.com/dzfranklin/OS-British-National-Grids/releases/download/os_bng_grids.gpkg.zip/os_bng_grids.gpkg.zip" && \
+	echo "Unzipping British National Grids..." && unzip -q /export/british_national_grids/os_bng_grids.gpkg.zip -d /export/british_national_grids && rm /export/british_national_grids/os_bng_grids.gpkg.zip \
+	&& echo "British National Grids are ready" || echo "British National Grids already exists."'
+
 .PHONY: import-os
 import-os: import-os-terr50 import-os-vmdvec
 
@@ -594,20 +607,22 @@ download-os-terr50: init-dirs
 .PHONY: import-os-vmdvec
 import-os-vmdvec: download-os-vmdvec
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
-	psql.sh -c "DROP TABLE IF EXISTS os_vmdvec_spotheight; DROP TABLE IF EXISTS os_vmdvec_ornament;" && \
-	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_OPTS) /export/os_vmdvec/Data/vmdvec_gb.gpkg \
-		-nln os_vmdvec_spotheight -t_srs epsg:3857 \
-		-sql "select round(height) as height, round(height * 3.28084) as height_ft, geometry from spotheight"  && \
-	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_OPTS) /export/os_vmdvec/Data/vmdvec_gb.gpkg \
-		-nln os_vmdvec_ornament -t_srs epsg:3857 \
-		-sql "SELECT geometry FROM ornament" \
+	echo "Importing OS VectorMap District (restricted to features intersecting Scotland)"; \
+	for table in $$(sqlite3 /export/os_vmdvec/Data/vmdvec_gb.gpkg "select table_name from gpkg_contents"); do \
+		nln="os_vmdvec_""$$table"; \
+		echo "Importing $$table to $$nln..."; \
+		ogr2ogr $(OGR2OGR_PG_DST) /export/os_vmdvec/Data/vmdvec_gb.gpkg "$$table" \
+			-nln "os_vmdvec_""$$table" -overwrite -t_srs epsg:3857 \
+			-spat_srs epsg:3857 -spat -10 54.56 0 61; \
+	done; \
+	echo "Imported OS VectorMap District." \
 	'
 
 .PHONY: import-os-terr50
 import-os-terr50: download-os-terr50
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
 	psql.sh -c "DROP TABLE IF EXISTS os_terr50_contour_line;" && \
-	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_OPTS) /export/os_terr50/Data/terr50_gb.gpkg \
+	ogr2ogr -f "PostgreSQL" $(OGR2OGR_PG_DST) /export/os_terr50/Data/terr50_gb.gpkg \
 		-nln os_terr50_contour_line -t_srs epsg:3857 \
 		-sql "SELECT geometry, cast(property_value as real) AS height, \
 		CASE \

@@ -1,5 +1,16 @@
 Import DOBIH
 
+OS font for os data?
+
+OS VectorMap:
+       woodland: Add OS woodland b/c it shows corridors better than OSM?
+       railway_station?
+       named place? (probably need hydrography to label OS waterways, maybe others)
+       functional site? (i.e. church, maybe want to use OS symbols to match OS maps)
+       administrative_boundary?
+       surface_water_line & surface_water_area
+
+
 Lower than zoom 10 it would be nice to show simple poly hillshading like outdooractive does
 
 Consider using OS data for everything walkhighlands does:
@@ -13,5 +24,3 @@ https://www.walkhighlands.co.uk/news/walkhighlands-map-server-and-tiles/
     This data is used for (most) paths, tracks, public toilets, footbridges, fords, wind turbines on these maps. The
     source data is available from the OSM under the Open Database License (ODbL). As footpaths are crowd-sourced by
     OpenStreetMap, they may not always exist on the ground.
-
-I think OS OpenMap Local is more detailed for the fewer features it has: https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-openmap-local/os-openmap-local-technical-specification/feature-types

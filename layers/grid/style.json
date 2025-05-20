@@ -1,0 +1,69 @@
+{
+  "layers": [
+    {
+      "id": "grid_10km",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "grid",
+      "minzoom": 9,
+      "maxzoom": 10.5,
+      "filter": [
+        "==",
+        [
+          "get",
+          "grid"
+        ],
+        "10km"
+      ],
+      "paint": {
+        "line-color": "#11b1ef",
+        "line-opacity": 0.15,
+        "line-width": 3
+      },
+      "order": 158
+    },
+    {
+      "id": "grid_5km",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "grid",
+      "minzoom": 10.5,
+      "maxzoom": 11.5,
+      "filter": [
+        "==",
+        [
+          "get",
+          "grid"
+        ],
+        "5km"
+      ],
+      "paint": {
+        "line-color": "#11b1ef",
+        "line-opacity": 0.3,
+        "line-width": 3
+      },
+      "order": 159
+    },
+    {
+      "id": "grid_1km",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "grid",
+      "minzoom": 11.5,
+      "filter": [
+        "==",
+        [
+          "get",
+          "grid"
+        ],
+        "1km"
+      ],
+      "paint": {
+        "line-color": "#11b1ef",
+        "line-opacity": 0.5,
+        "line-width": 1
+      },
+      "order": 160
+    }
+  ]
+}

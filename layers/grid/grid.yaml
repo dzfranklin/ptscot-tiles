@@ -1,0 +1,11 @@
+layer:
+  id: "grid"
+  description: British National Grids
+  buffer_size: 4
+  fields:
+    grid: Grid name (1km, 10km)
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry, grid FROM layer_grid(!bbox!, z(!scale_denominator!))) as t
+schema:
+  - ./grid.sql

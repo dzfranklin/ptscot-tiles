@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION layer_os_spot_height(bbox geometry,
             )
 AS
 $$
-SELECT geometry, height, height_ft
+SELECT geometry, round(height) as height, round(height * 3.28084) as height_ft
 FROM os_vmdvec_spotheight
 WHERE geometry && bbox
   AND zoom_level >= 11

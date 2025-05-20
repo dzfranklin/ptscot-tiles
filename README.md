@@ -175,6 +175,7 @@ make download area=albania  # download albania .osm.pbf file -- can be skipped i
 make import-osm             # import data into postgres
 make import-wikidata        # import Wikidata
 make import-os              # import Ordnance Survey
+make import-british-national-grids # Import OS British National Grids
 make import-sql             # create / import sql functions 
 make generate-bbox-file     # compute data bbox -- not needed for the whole planet or for downloaded area by `make download`
 make generate-tiles-pg      # generate tiles

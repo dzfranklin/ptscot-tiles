@@ -9,7 +9,7 @@ SELECT geometry
 FROM os_vmdvec_ornament
 WHERE geometry && bbox
   AND zoom_level >= 11
-ORDER BY ogc_fid;
+ORDER BY fid;
 $$
     LANGUAGE SQL
     STABLE
