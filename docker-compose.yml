@@ -64,6 +64,7 @@ services:
       - ./build:/mapping
       - ./cache:/cache
       - ./style:/style
+      - ./extra_tools:/extra_tools
 
   update-osm:
     <<: *openmaptiles-tools

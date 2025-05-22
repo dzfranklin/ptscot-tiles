@@ -3,10 +3,11 @@ tileset:
     - layers/water/water.yaml
     - layers/waterway/waterway.yaml
     - layers/os_surface_water_line/os_surface_water_line.yaml
+    - layers/os_surface_water_area/os_surface_water_area.yaml
     - layers/landcover/landcover.yaml
     - layers/landuse/landuse.yaml
     - layers/os_woodland/os_woodland.yaml
-#    - layers/mountain_peak/mountain_peak.yaml
+    - layers/hill/hill.yaml
     - layers/contours/contours.yaml
     - layers/os_ornament/os_ornament.yaml
     - layers/os_spot_height/os_spot_height.yaml

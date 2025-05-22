@@ -1,7 +1,4 @@
-Import DOBIH
-
-OS VectorMap:
-       surface_water_line & surface_water_area (unfortunately some stuff tagged as line in osm is area in os, so need both)
+match water os labels to their geometries and give them a rotation?
 
 How to get park boundaries?
 

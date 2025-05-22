@@ -7,10 +7,33 @@
       "source-layer": "os_surface_water_area",
       "min-zoom": 10,
       "paint": {
-        "fill-color": "#0dacef",
-        "fill-outline-color": "#0daaed"
+        "fill-color": "#d3eefc"
       },
-      "order": 14
+      "order": 15
+    },
+    {
+      "id": "os_surface_water_area_outline",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "os_surface_water_area",
+      "min-zoom": 10,
+      "paint": {
+        "line-color": "#0aaff1",
+        "line-width": {
+          "base": 1.2,
+          "stops": [
+            [
+              10,
+              0.4
+            ],
+            [
+              20,
+              5
+            ]
+          ]
+        }
+      },
+      "order": 16
     }
   ]
 }

@@ -1,0 +1,344 @@
+{
+  "layers": [
+    {
+      "id": "hill_height",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "hill",
+      "minzoom": 12,
+      "filter": [
+        "!",
+        [
+          "any",
+          [
+            "get",
+            "is_munro"
+          ],
+          [
+            "get",
+            "is_corbett"
+          ],
+          [
+            "get",
+            "is_graham"
+          ]
+        ]
+      ],
+      "layout": {
+        "text-font": [
+          "Noto Sans Regular"
+        ],
+        "text-size": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          10,
+          15,
+          12
+        ],
+        "text-field": "{height}",
+        "text-justify": "auto",
+        "text-variable-anchor": [
+          "right",
+          "top-right",
+          "top",
+          "bottom-right"
+        ],
+        "text-radial-offset": 0.75
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          1,
+          15,
+          2
+        ]
+      },
+      "order": 217
+    },
+    {
+      "id": "hill_height_special",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "hill",
+      "minzoom": 11,
+      "filter": [
+        "any",
+        [
+          "get",
+          "is_munro"
+        ],
+        [
+          "get",
+          "is_corbett"
+        ],
+        [
+          "get",
+          "is_graham"
+        ]
+      ],
+      "layout": {
+        "text-size": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          6,
+          13,
+          14
+        ],
+        "text-font": [
+          "Noto Sans Bold"
+        ],
+        "text-field": "{height}",
+        "text-justify": "auto",
+        "text-variable-anchor": [
+          "right",
+          "top-right",
+          "top",
+          "bottom-right"
+        ],
+        "text-radial-offset": 0.75
+      },
+      "paint": {
+        "text-color": [
+          "case",
+          [
+            "get",
+            "is_munro"
+          ],
+          "#c7082f",
+          [
+            "get",
+            "is_corbett"
+          ],
+          "#e06d1a",
+          [
+            "get",
+            "is_graham"
+          ],
+          "#027f60",
+          "#000000"
+        ],
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          0.75,
+          13,
+          1.75
+        ]
+      },
+      "order": 218
+    },
+    {
+      "id": "hill_name",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "hill",
+      "minzoom": 10,
+      "filter": [
+        "!",
+        [
+          "any",
+          [
+            "get",
+            "is_munro"
+          ],
+          [
+            "get",
+            "is_corbett"
+          ],
+          [
+            "get",
+            "is_graham"
+          ]
+        ]
+      ],
+      "layout": {
+        "icon-anchor": "center",
+        "icon-image": "peak",
+        "text-font": [
+          "Noto Sans Regular"
+        ],
+        "text-size": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          10,
+          15,
+          12
+        ],
+        "text-field": "{name}",
+        "text-justify": "auto",
+        "text-variable-anchor": [
+          "left",
+          "bottom-left",
+          "bottom",
+          "top-left"
+        ],
+        "text-radial-offset": 0.75
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          1,
+          15,
+          2
+        ]
+      },
+      "order": 219
+    },
+    {
+      "id": "hill_name_special",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "hill",
+      "minzoom": 6,
+      "filter": [
+        "any",
+        [
+          "get",
+          "is_munro"
+        ],
+        [
+          "get",
+          "is_corbett"
+        ],
+        [
+          "get",
+          "is_graham"
+        ]
+      ],
+      "layout": {
+        "icon-anchor": "center",
+        "icon-image": [
+          "case",
+          [
+            "get",
+            "is_munro"
+          ],
+          "peak_munro",
+          [
+            "get",
+            "is_corbett"
+          ],
+          "peak_corbett",
+          [
+            "get",
+            "is_graham"
+          ],
+          "peak_graham",
+          "peak"
+        ],
+        "text-font": [
+          "Noto Sans Bold"
+        ],
+        "text-size": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          6,
+          13,
+          14
+        ],
+        "text-field": "{name}",
+        "text-justify": "auto",
+        "text-variable-anchor": [
+          "left",
+          "bottom-left",
+          "bottom",
+          "top-left"
+        ],
+        "text-radial-offset": 0.75
+      },
+      "paint": {
+        "text-color": [
+          "case",
+          [
+            "get",
+            "is_munro"
+          ],
+          "#c7082f",
+          [
+            "get",
+            "is_corbett"
+          ],
+          "#e06d1a",
+          [
+            "get",
+            "is_graham"
+          ],
+          "#027f60",
+          "#000000"
+        ],
+        "text-halo-color": "rgba(255,255,255,0.8)",
+        "text-halo-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.2
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          0.75,
+          13,
+          1.75
+        ]
+      },
+      "order": 220
+    }
+  ]
+}

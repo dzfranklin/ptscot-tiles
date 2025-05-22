@@ -27,41 +27,41 @@ CREATE MATERIALIZED VIEW match_osm_ne_id AS
 WITH name_match AS
     (
         -- Distinct on keeps just the first occurence -> order by 'area_ratio DESC'.
-    SELECT DISTINCT ON (ne.ne_id) 
+    SELECT DISTINCT ON (ne.ne_id)
         ne.ne_id,
         osm.osm_id,
         (ST_Area(ST_Intersection(ne.geometry, osm.geometry))/ST_Area(ne.geometry)) AS area_ratio
     FROM ne_10m_lakes ne, osm_water_polygon_gen_z6 osm
-    WHERE ne.name = osm.name 
+    WHERE ne.name = osm.name
         AND ST_Intersects(ne.geometry, osm.geometry)
     ORDER BY ne_id,
              area_ratio DESC
     ),
-        -- Add lakes which are not match by name, but intersects. 
+        -- Add lakes which are not match by name, but intersects.
         -- Duplicity solves 'DISTICT ON' with 'area_ratio'.
     geom_match AS
-    (SELECT DISTINCT ON (ne.ne_id) 
+    (SELECT DISTINCT ON (ne.ne_id)
         ne.ne_id,
         osm.osm_id,
         (ST_Area(ST_Intersection(ne.geometry, osm.geometry))/ST_Area(ne.geometry)) AS area_ratio
 	FROM ne_10m_lakes ne, osm_water_polygon_gen_z6 osm
 	WHERE ST_Intersects(ne.geometry, osm.geometry)
-        AND ne.ne_id NOT IN 
-            (   SELECT ne_id 
+        AND ne.ne_id NOT IN
+            (   SELECT ne_id
                 FROM name_match
             )
     ORDER BY ne_id,
              area_ratio DESC
     )
- 
+
 SELECT  ne_id,
-        osm_id 
+        osm_id
 FROM name_match
 
 UNION
 
 SELECT  ne_id,
-        osm_id 
+        osm_id
 FROM geom_match
 );
 
@@ -86,7 +86,7 @@ DROP MATERIALIZED VIEW IF EXISTS ne_10m_lakes_gen_z5 CASCADE;
 CREATE MATERIALIZED VIEW ne_10m_lakes_gen_z5 AS
 (
 SELECT COALESCE(osm.osm_id, ne_id) AS id,
-        -- Union fixing e.g. Lake Huron and Georgian Bay duplicity 
+        -- Union fixing e.g. Lake Huron and Georgian Bay duplicity
        (ST_Dump(ST_MakeValid(ST_Simplify(ST_Union(geometry), ZRes(7))))).geom AS geometry,
        'lake'::text AS class,
        NULL::boolean AS is_intermittent,
@@ -328,7 +328,7 @@ SELECT id,
 FROM ne_50m_ocean_gen_z3
 UNION ALL
 -- etldoc:  ne_50m_lakes_gen_z3 ->  water_z3
-SELECT id, 
+SELECT id,
        geometry,
        class,
        is_intermittent,
@@ -626,7 +626,7 @@ FROM (
          FROM water_z12
          WHERE zoom_level >= 12
      ) AS zoom_levels
-WHERE geometry && bbox;
+WHERE geometry && bbox AND (zoom_level < 10 OR class = 'ocean');
 $$ LANGUAGE SQL STABLE
                 -- STRICT
                 PARALLEL SAFE;

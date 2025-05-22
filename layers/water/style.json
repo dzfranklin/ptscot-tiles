@@ -1,54 +1,34 @@
 {
   "layers": [
     {
-      "id": "water_intermittent",
+      "id": "water_lowres",
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "water",
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "rgba(172, 218, 251, 1)",
-        "fill-opacity": 0.85
-      },
-      "metadata": {},
-      "filter": [
-        "all",
-        [
-          "==",
-          "intermittent",
-          1
-        ]
-      ],
-      "order": 17
-    },
-    {
-      "id": "water",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "water",
-      "layout": {
-        "visibility": "visible"
-      },
+      "maxzoom": 10,
       "paint": {
         "fill-color": "#aad3df"
       },
-      "metadata": {},
+      "order": 19
+    },
+    {
+      "id": "ocean",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "minzoom": 10,
       "filter": [
-        "all",
+        "==",
         [
-          "!=",
-          "intermittent",
-          1
+          "get",
+          "class"
         ],
-        [
-          "!=",
-          "brunnel",
-          "tunnel"
-        ]
+        "ocean"
       ],
-      "order": 18
+      "paint": {
+        "fill-color": "#d3eefc"
+      },
+      "order": 20
     }
   ]
 }

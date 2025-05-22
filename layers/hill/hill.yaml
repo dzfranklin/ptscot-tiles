@@ -1,0 +1,18 @@
+layer:
+  id: "hill"
+  description: Hills from the Database of British and Irish Hills
+  buffer_size: 4
+  fields:
+    dobih_number: Database of British and Irish Hills number
+    name: Name
+    height: Height in meters
+    classification: List of classes
+    is_munro: boolean
+    is_corbett: boolean
+    is_graham: boolean
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry, dobih_number, name, height, classification, is_munro, is_corbett, is_graham FROM layer_hill(!bbox!, z(!scale_denominator!))) as t
+schema:
+  - ./update_hill.sql
+  - ./hill.sql

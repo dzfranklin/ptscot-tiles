@@ -340,6 +340,7 @@ start-db-nowait: init-dirs
 start-db: start-db-nowait
 	@echo "Wait for PostgreSQL to start..."
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools pgwait
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools psql.sh -c 'CREATE EXTENSION pg_trgm' || true
 
 # Wrap start-db target but use the preloaded image
 .PHONY: start-db-preloaded
@@ -571,6 +572,22 @@ generate-devdoc: init-dirs
 .PHONY: bash
 bash: init-dirs
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools bash
+
+.PHONY: import-dobih
+import-dobih: download-dobih
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c \
+	'/extra_tools/import_csv.sh /export/dobih/dobih.csv'
+
+.PHONY: download-dobih
+download-dobih: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d /export/dobih ] && mkdir /export/dobih && \
+	echo "Downloading Database of British and Irish Hills..." && wget -qO /export/dobih/hillcsv.zip --show-progress \
+	"https://www.hills-database.co.uk/hillcsv.zip" && \
+	echo "Unzipping Database of British and Irish Hills..." && \
+	unzip -q /export/dobih/hillcsv.zip -d /export/dobih && \
+	mv /export/dobih/$$(unzip -lqq /export/dobih/hillcsv.zip | sed "s/.* \(.*\.csv\)/\1/") /export/dobih/dobih.csv && \
+	rm /export/dobih/hillcsv.zip \
+	&& echo "Database of British and Irish Hills is ready" || echo "Database of British and Irish Hills already exists."'
 
 .PHONY: import-british-national-grids
 import-british-national-grids: download-british-national-grids

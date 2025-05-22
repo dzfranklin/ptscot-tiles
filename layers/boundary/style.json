@@ -61,7 +61,7 @@
           0
         ]
       ],
-      "order": 150
+      "order": 152
     },
     {
       "id": "boundary_2",
@@ -114,7 +114,7 @@
           0
         ]
       ],
-      "order": 151
+      "order": 153
     },
     {
       "id": "boundary_2_disputed",
@@ -171,7 +171,7 @@
           0
         ]
       ],
-      "order": 152
+      "order": 154
     },
     {
       "id": "boundary_2_disputed_maritime",
@@ -228,7 +228,7 @@
           1
         ]
       ],
-      "order": 153
+      "order": 155
     },
     {
       "id": "boundary_2_maritime",
@@ -281,7 +281,7 @@
           1
         ]
       ],
-      "order": 154
+      "order": 156
     }
   ]
 }

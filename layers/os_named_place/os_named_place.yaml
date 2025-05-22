@@ -3,6 +3,9 @@ layer:
   description: |
     [OS VectorMap Named Place](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/namedplace)
   buffer_size: 4
+  requires:
+    layers:
+      - hill
   fields:
     distinctive_name: |
       The settlement name or geographic place name.
@@ -20,4 +23,5 @@ layer:
     geometry_field: geometry
     query: (SELECT geometry, distinctive_name, font_height, text_orientation FROM layer_os_named_place(!bbox!, z(!scale_denominator!))) as t
 schema:
+  - ./link_dobih_os.sql
   - ./os_named_place.sql
