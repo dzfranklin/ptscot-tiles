@@ -3,17 +3,24 @@
     "paths": {
       "fonts": "/data/fonts",
       "sprites": "/build/style",
-      "styles": "/build/style"
+      "styles": "/build/style",
+      "mbtiles": "/build"
     }
   },
   "styles": {
-    "OSM OpenMapTiles": {
+    "ptscot": {
       "style": "style.json",
+      "serve_rendered": false,
+      "serve_data": true,
       "tilejson": {
         "type": "overlay"
       }
     }
   },
   "data": {
+    "dem": {
+      "mbtiles": "rgb_dem_scotland.mbtiles",
+      "encoding": "mapbox"
+    }
   }
 }

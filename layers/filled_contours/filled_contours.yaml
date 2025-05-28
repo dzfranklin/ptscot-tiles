@@ -1,0 +1,13 @@
+layer:
+  id: "filled_contours"
+  description: Contour polygons
+  buffer_size: 8
+  fields:
+    height: Height in meters
+    area: Area in square kilometers
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry, height, area FROM layer_filled_contours(!bbox!, z(!scale_denominator!))) as t
+schema:
+  - ./update_filled_contours.sql
+  - ./filled_contours.sql

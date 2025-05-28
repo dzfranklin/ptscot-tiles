@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS dobih_os_link;
+DROP TABLE IF EXISTS dobih_os_link CASCADE;
 
 CREATE TABLE dobih_os_link
 (
@@ -15,3 +15,10 @@ FROM dobih
 WHERE coalesce(greatest(word_similarity(dobih.name, os.normalized_name),
                         word_similarity(os.normalized_name, dobih.name),
                         word_similarity(os.normalized_name, 'Point ' || dobih.height || 'm')), 0) > 0.55;
+
+DELETE
+FROM dobih_os_link
+WHERE dobih_number IN (SELECT dobih_number
+                       FROM dobih_os_link
+                       GROUP BY dobih_number
+                       HAVING count(dobih_number) > 1);

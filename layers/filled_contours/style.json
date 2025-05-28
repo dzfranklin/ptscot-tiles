@@ -1,0 +1,20 @@
+{
+  "layers": [
+    {
+      "id": "filled_contours_shade",
+      "source": "openmaptiles",
+      "source-layer": "filled_contours",
+      "type": "fill",
+      "minzoom": 4,
+      "maxzoom": 10,
+      "paint": {
+        "fill-opacity": {
+          "base": 1,
+          "stops": [[3, 0], [10, 0.2]]
+        },
+        "fill-color": "#f4bc8f"
+      },
+      "order": 1
+    }
+  ]
+}

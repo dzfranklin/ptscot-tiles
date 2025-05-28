@@ -51,17 +51,6 @@ elif command == "add-gap":
         for layer in layers[pathname]["layers"]:
             if layer["order"] >= gap_number:
                 layer["order"] += 1
-elif command == "remove-gap":
-    gap_number = int(sys.argv[2])
-    for pathname in layers:
-        for layer in layers[pathname]["layers"]:
-            if layer["order"] == gap_number:
-                print("not a gap: " + str(gap_number) + " in " + pathname)
-                sys.exit(1)
-    for pathname in layers:
-        for layer in layers[pathname]["layers"]:
-            if layer["order"] > gap_number:
-                layer["order"] -= 1
 else:
     print("Unrecognized command: " + command)
     sys.exit(1)

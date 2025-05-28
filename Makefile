@@ -244,7 +244,7 @@ export HELP_MESSAGE
 #
 
 .PHONY: all
-all: init-dirs build/openmaptiles.tm2source/data.yml build/mapping.yaml build-sql build-style
+all: init-dirs build/mapping.yaml build-sql build-style
 
 .PHONY: help
 help:
@@ -265,17 +265,10 @@ endef
 .PHONY: init-dirs
 init-dirs:
 	@mkdir -p build/sql/parallel
-	@mkdir -p build/openmaptiles.tm2source
 	@mkdir -p build/style
 	@mkdir -p data
 	@mkdir -p cache
 	@ ! ($(DOCKER_COMPOSE) 2>/dev/null run $(DC_OPTS) openmaptiles-tools df --output=fstype /tileset| grep -q 9p) < /dev/null || ($(win_fs_error))
-
-build/openmaptiles.tm2source/data.yml: init-dirs
-ifeq (,$(wildcard build/openmaptiles.tm2source/data.yml))
-	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools bash -c \
-		'generate-tm2source $(TILESET_FILE) > $@'
-endif
 
 build/mapping.yaml: init-dirs
 ifeq (,$(wildcard build/mapping.yaml))
@@ -303,6 +296,7 @@ build-sprite: init-dirs
 build-style: init-dirs
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools bash -c 'style-tools recompose $(TILESET_FILE) $(STYLE_FILE) \
 		$(STYLE_HEADER_FILE) && \
+		/extra_tools/postprocess_style.py $(STYLE_FILE) && \
 		spreet /style/icons build/style/sprite && spreet --retina /style/icons build/style/sprite@2x'
 
 .PHONY: download-fonts
@@ -456,16 +450,6 @@ import-sql: all start-db-nowait
     	awk -v s=": WARNING:" '1{print; fflush()} $$0~s{print "\n*** WARNING detected, aborting"; exit(1)}' | \
     	awk '1{print; fflush()} $$0~".*ERROR" {txt=$$0} END{ if(txt){print "\n*** ERROR detected, aborting:"; print txt; exit(1)} }'
 
-.PHONY: generate-tiles
-generate-tiles: all start-db
-	@echo "WARNING: This Mapnik-based method of tile generation is obsolete. Use generate-tiles-pg instead."
-	@echo "Generating tiles into $(MBTILES_LOCAL_FILE) (will delete if already exists)..."
-	@rm -rf "$(MBTILES_LOCAL_FILE)"
-	$(DOCKER_COMPOSE) run $(DC_OPTS) generate-vectortiles
-	@echo "Updating generated tile metadata ..."
-	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools \
-			mbtiles-tools meta-generate "$(MBTILES_LOCAL_FILE)" $(TILESET_FILE) --auto-minmax --show-ranges
-
 .PHONY: generate-tiles-pg
 generate-tiles-pg: all start-db
 	@echo "Generating tiles into $(MBTILES_LOCAL_FILE) (will delete if already exists) using PostGIS ST_MVT()..."
@@ -591,8 +575,14 @@ download-dobih: init-dirs
 
 .PHONY: import-british-national-grids
 import-british-national-grids: download-british-national-grids
-	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c \
-	'ogr2ogr -f "PostgreSQL" -overwrite $(OGR2OGR_PG_DST) /export/british_national_grids/os_bng_grids.gpkg -t_srs epsg:3857'
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
+	for table in $$(sqlite3 /export/british_national_grids/os_bng_grids.gpkg "select table_name from gpkg_contents"); do \
+		nln="bng_""$$table"; \
+		echo "Importing $$table to $$nln..."; \
+		ogr2ogr $(OGR2OGR_PG_DST) /export/british_national_grids/os_bng_grids.gpkg "$$table" \
+			-nln "$$nln" -overwrite -t_srs epsg:3857; \
+	done; \
+	'
 
 .PHONY: download-british-national-grids
 download-british-national-grids: init-dirs
@@ -603,7 +593,7 @@ download-british-national-grids: init-dirs
 	&& echo "British National Grids are ready" || echo "British National Grids already exists."'
 
 .PHONY: import-os
-import-os: import-os-terr50 import-os-vmdvec
+import-os: import-os-terr50-gpkg import-os-terr50-grid import-os-vmdvec
 
 .PHONY: download-os-vmdvec
 download-os-vmdvec: init-dirs
@@ -613,13 +603,22 @@ download-os-vmdvec: init-dirs
 	echo "Unzipping OS VectorMap District..." && unzip -q /export/os_vmdvec/vmdvec_gb.zip -d /export/os_vmdvec && rm /export/os_vmdvec/vmdvec_gb.zip || \
 	echo "OS VectorMap District already exists."'
 
-.PHONY: download-os-terr50
-download-os-terr50: init-dirs
-	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_terr50" ] && mkdir /export/os_terr50 && \
-	echo "Downloading OS Terrain50..." && wget -qO /export/os_terr50/terr50_gpkg_gb.zip --show-progress \
+.PHONY: download-os-terr50-gpkg
+download-os-terr50-gpkg: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_terr50_gpkg" ] && mkdir /export/os_terr50_gpkg && \
+	echo "Downloading OS Terrain50 gpkg..." && wget -qO /export/os_terr50_gpkg/terr50_gpkg_gb.zip --show-progress \
 	"https://api.os.uk/downloads/v1/products/Terrain50/downloads?area=GB&format=GeoPackage&redirect" && \
-	echo "Unzipping OS Terrain50..." && unzip -q /export/os_terr50/terr50_gpkg_gb.zip -d /export/os_terr50 && rm /export/os_terr50/terr50_gpkg_gb.zip || \
-	echo "OS Terrain50 already exists."'
+	echo "Unzipping OS Terrain50..." && unzip -q /export/os_terr50_gpkg/terr50_gpkg_gb.zip -d /export/os_terr50_gpkg && rm /export/os_terr50_gpkg/terr50_gpkg_gb.zip || \
+	echo "OS Terrain50 gpkg already exists."'
+
+.PHONY: download-os-terr50-grid
+download-os-terr50-grid: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_terr50_gagg" ] && mkdir /export/os_terr50_gagg && \
+	echo "Downloading OS Terrain50 grid..." && wget -qO /export/os_terr50_gagg/terr50_gagg_gb.zip --show-progress \
+	"https://api.os.uk/downloads/v1/products/Terrain50/downloads?area=GB&format=ASCII+Grid+and+GML+%28Grid%29&redirect" && \
+	echo "Unzipping OS Terrain50 grid..." && unzip -q /export/os_terr50_gagg/terr50_gagg_gb.zip -d /export/os_terr50_gagg && rm /export/os_terr50_gagg/terr50_gagg_gb.zip && \
+	for f in /export/os_terr50_gagg/data/*/*.zip; do unzip -q "$$f" -d "$$(dirname "$$f")" && rm "$$f"; done || \
+	echo "OS Terrain50 grid already exists."'
 
 .PHONY: import-os-vmdvec
 import-os-vmdvec: download-os-vmdvec
@@ -635,18 +634,31 @@ import-os-vmdvec: download-os-vmdvec
 	echo "Imported OS VectorMap District." \
 	'
 
-.PHONY: import-os-terr50
-import-os-terr50: download-os-terr50
+.PHONY: import-os-terr50-gpkg
+import-os-terr50-gpkg: download-os-terr50-gpkg
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
-	echo "Importing OS Terrain50 (restricted to features intersecting Scotland)"; \
-	for table in $$(sqlite3 /export/os_terr50/Data/terr50_gb.gpkg "select table_name from gpkg_contents"); do \
+	echo "Importing OS Terrain50 gpkg (restricted to features intersecting Scotland)"; \
+	for table in $$(sqlite3 /export/os_terr50_gpkg/Data/terr50_gb.gpkg "select table_name from gpkg_contents"); do \
 		nln="os_terr50_""$$table"; \
 		echo "Importing $$table to $$nln..."; \
-		ogr2ogr $(OGR2OGR_PG_DST) /export/os_terr50/Data/terr50_gb.gpkg "$$table" \
+		ogr2ogr $(OGR2OGR_PG_DST) /export/os_terr50_gpkg/Data/terr50_gb.gpkg "$$table" \
 			-nln "$$nln" -overwrite -t_srs epsg:3857 \
 			-spat_srs epsg:4326 -spat -10 54.56 0 61; \
 	done; \
-	echo "Imported OS Terrain50." \
+	echo "Imported OS Terrain50 gpkg." \
+	'
+
+.PHONY: import-os-terr50-grid
+import-os-terr50-grid: download-os-terr50-grid
+	$(DOCKER_COMPOSE) run --rm openmaptiles-tools sh -c '\
+	echo "Installing tools..." && \
+	pip install -r /extra_tools/process_os_terr50_gagg_requirements.txt  --quiet --disable-pip-version-check --root-user-action=ignore && \
+	echo "Processing OS Terrain50 grid..." && \
+	/extra_tools/process_os_terr50_gagg.sh /export/os_terr50_gagg && \
+	cp /export/os_terr50_gagg/rgb_dem_scotland.mbtiles /mapping/rgb_dem_scotland.mbtiles && \
+	echo "Importing contours generated from OS Terrain50 Grid to Postgres..." && \
+	ogr2ogr $(OGR2OGR_PG_DST) /export/os_terr50_gagg/gdal_contour_polygons.gpkg gdal_contour_polygons -nln gdal_contour_polygons -overwrite && \
+	echo "Imported OS Terrain50 Grid." \
 	'
 
 .PHONY: import-wikidata
@@ -748,7 +760,7 @@ data/changes.osc.gz: init-dirs
 	@echo " UPDATE unit test data..."
 	$(DOCKER_COMPOSE) $(DC_CONFIG_CACHE) run $(DC_OPTS_CACHE) openmaptiles-tools sh -c 'osmconvert tests/update/*.osc --merge-versions -o=data/changes.osc && gzip -f data/changes.osc'
 
-test-sql: clean refresh-docker-images destroy-db start-db-nowait build/import-tests.osm.pbf data/changes.state.txt data/last.state.txt data/changes.repl.json build/mapping.yaml data/changes.osc.gz build/openmaptiles.tm2source/data.yml build/mapping.yaml build-sql
+test-sql: clean refresh-docker-images destroy-db start-db-nowait build/import-tests.osm.pbf data/changes.state.txt data/last.state.txt data/changes.repl.json build/mapping.yaml data/changes.osc.gz build/mapping.yaml build-sql
 	$(eval area := changes)
 
 	@echo "Load IMPORT test data"

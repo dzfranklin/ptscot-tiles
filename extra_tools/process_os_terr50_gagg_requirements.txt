@@ -1,0 +1,16 @@
+affine==2.4.0
+attrs==25.3.0
+certifi==2025.4.26
+click==8.1.8
+click-plugins==1.1.1
+cligj==0.7.2
+importlib_metadata==8.7.0
+mbutil==0.3.0
+mercantile==1.2.1
+numpy==2.0.2
+pillow==11.2.1
+pyparsing==3.2.3
+rasterio==1.4.3
+rio-mucho==1.0.0
+rio-rgbify==0.4.0
+zipp==3.21.0

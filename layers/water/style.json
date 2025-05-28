@@ -9,7 +9,7 @@
       "paint": {
         "fill-color": "#aad3df"
       },
-      "order": 19
+      "order": 23
     },
     {
       "id": "ocean",
@@ -28,7 +28,7 @@
       "paint": {
         "fill-color": "#d3eefc"
       },
-      "order": 20
+      "order": 24
     }
   ]
 }

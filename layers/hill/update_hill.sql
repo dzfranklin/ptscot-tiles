@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS dobih;
+DROP TABLE IF EXISTS dobih CASCADE;
 CREATE TABLE dobih
 (
     number         integer primary key not null,
@@ -7,6 +7,7 @@ CREATE TABLE dobih
     classification text[],
     height         numeric
 );
+CREATE INDEX dobih_idx ON dobih USING gist (geometry);
 
 INSERT INTO dobih (number, geometry, name, classification, height)
 SELECT cast("Number" as integer)                           as number,

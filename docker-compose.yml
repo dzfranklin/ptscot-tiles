@@ -53,6 +53,8 @@ services:
       PGUSER: ${PGUSER:-openmaptiles}
       PGPASSWORD: ${PGPASSWORD:-openmaptiles}
       PGPORT: ${PGPORT:-5432}
+      # Allow extra_tools to import the openmaptiles python package
+      PYTHONPATH: /usr/src/app
       MBTILES_FILE: ${MBTILES_FILE}
     networks:
       - postgres
@@ -69,45 +71,6 @@ services:
   update-osm:
     <<: *openmaptiles-tools
     command: import-update
-
-  generate-changed-vectortiles:
-    image: "openmaptiles/generate-vectortiles:${TOOLS_VERSION}"
-    command: ./export-list.sh
-    volumes:
-      - ./data:/export
-      - ./build/openmaptiles.tm2source:/tm2source
-    networks:
-      - postgres
-    env_file: .env
-    environment:
-      MBTILES_NAME: ${MBTILES_FILE}
-      # Control tilelive-copy threads
-      COPY_CONCURRENCY: ${COPY_CONCURRENCY}
-      PGDATABASE: ${PGDATABASE:-openmaptiles}
-      PGUSER: ${PGUSER:-openmaptiles}
-      PGPASSWORD: ${PGPASSWORD:-openmaptiles}
-      PGPORT: ${PGPORT:-5432}
-
-  generate-vectortiles:
-    image: "openmaptiles/generate-vectortiles:${TOOLS_VERSION}"
-    volumes:
-      - ./data:/export
-      - ./build/openmaptiles.tm2source:/tm2source
-    networks:
-      - postgres
-    env_file: .env
-    environment:
-      MBTILES_NAME: ${MBTILES_FILE}
-      BBOX: ${BBOX}
-      MIN_ZOOM: ${MIN_ZOOM}
-      MAX_ZOOM: ${MAX_ZOOM}
-      # Control tilelive-copy threads
-      COPY_CONCURRENCY: ${COPY_CONCURRENCY}
-      #
-      PGDATABASE: ${PGDATABASE:-openmaptiles}
-      PGUSER: ${PGUSER:-openmaptiles}
-      PGPASSWORD: ${PGPASSWORD:-openmaptiles}
-      PGPORT: ${PGPORT:-5432}
 
   postserve:
     image: "openmaptiles/openmaptiles-tools:${TOOLS_VERSION}"

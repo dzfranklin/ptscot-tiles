@@ -1,7 +1,7 @@
 {
   "version": 8,
-  "name": "OSM OpenMapTiles",
-  "id": "openmaptiles",
+  "name": "PlanTopo Scotland",
+  "id": "ptscot",
   "center": [
     0,
     0
@@ -13,6 +13,10 @@
     "openmaptiles": {
       "type": "vector",
       "url": "http://localhost:8090"
+    },
+    "dem": {
+      "type": "raster-dem",
+      "url": "http://localhost:8080/data/dem.json"
     }
   },
   "glyphs": "{fontstack}/{range}.pbf",
@@ -21,9 +25,6 @@
     {
       "id": "background",
       "type": "background",
-      "layout": {
-        "visibility": "visible"
-      },
       "paint": {
         "background-color": "#f2efe9"
       }

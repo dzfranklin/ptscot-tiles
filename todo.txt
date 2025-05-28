@@ -1,3 +1,7 @@
+Hillshadinging issues:
+    too strong: http://localhost:8080/styles/ptscot/?vector#10.96/56.5553/-4.1751
+    needs clipping
+
 match water os labels to their geometries and give them a rotation?
 
 How to get park boundaries?
@@ -5,9 +9,15 @@ How to get park boundaries?
 Lower than zoom 10 it would be nice to show simple poly hillshading like outdooractive does
 plus contours filled categorically like os does for the 125k product
 
+Look into categorically (or in a gradient) coloring dem pixels instead of filling contours.
+    might be more efficient at low zoom. might look better at high zoom.
+    might be more acceptable not to exactly match contours at high zoom
+
 show wind turbines at low zoom (below 10?)
 
 increase visibility of pylons
+
+filled contours based on gdal polygons for zooms 4,56,7,8,9,10
 
 paths
 
@@ -22,3 +32,24 @@ https://www.walkhighlands.co.uk/news/walkhighlands-map-server-and-tiles/
     This data is used for (most) paths, tracks, public toilets, footbridges, fords, wind turbines on these maps. The
     source data is available from the OSM under the Open Database License (ODbL). As footpaths are crowd-sourced by
     OpenStreetMap, they may not always exist on the ground.
+
+Create https://plantopo.com/about-this-map/ptscot (referenced in attribution). Detail methodology, sources as would be interesting/useful to users
+
+consider do I want OS terrain: https://www.ordnancesurvey.co.uk/products/os-terrain-50
+    breakline
+    ridges
+    formlines
+
+Consider Premium:
+    Maybe at low zooms (say <=14) make the map optionally pull in OS premium data
+    Note that OS allows allowing users to print for personal use!
+    Does an OS NGD tile have everything I want? https://docs.os.uk/osngd/getting-started/access-the-os-ngd-api/os-ngd-api-tiles/what-data-is-available
+    Or does it make more sense to bring in the actual OS Explorer at that point, then overlay trails etc?
+    NGD's demo style pulls contours from Open ZoomStack
+    On zoom<16 NGD has
+        same ornaments as vmd
+        same streams as vmd
+        lower resolution contours than terr50
+    On zoom>16 NGD has
+        field boundaries!
+        slightly higher resolution streams than Explorer

@@ -1,0 +1,29 @@
+{
+  "layers": [
+    {
+      "id": "hillshading",
+      "source": "dem",
+      "type": "hillshade",
+      "minzoom": 3,
+      "maxzoom": 11,
+      "paint": {
+        "hillshade-exaggeration": {
+          "stops": [
+            [
+              6,
+              0.7
+            ],
+            [
+              10,
+              0.5
+            ],
+            [
+              14,
+              0
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@
       "paint": {
         "fill-color": "#d3eefc"
       },
-      "order": 15
+      "order": 19
     },
     {
       "id": "os_surface_water_area_outline",
@@ -33,7 +33,7 @@
           ]
         }
       },
-      "order": 16
+      "order": 20
     }
   ]
 }

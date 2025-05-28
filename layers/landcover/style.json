@@ -21,7 +21,7 @@
           "park"
         ]
       ],
-      "order": 4
+      "order": 5
     },
     {
       "id": "landcover_subclasses",
@@ -119,7 +119,28 @@
           "vineyard"
         ]
       ],
-      "order": 5
+      "order": 6
+    },
+    {
+      "id": "landcover_ice",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "landcover",
+      "minzoom": 5,
+      "paint": {
+        "fill-color": "#ddecec",
+        "fill-antialias": false
+      },
+      "metadata": {},
+      "filter": [
+        "all",
+        [
+          "in",
+          "class",
+          "ice"
+        ]
+      ],
+      "order": 8
     },
     {
       "id": "landcover_subclass_patterns",
@@ -238,7 +259,7 @@
           "wetland"
         ]
       ],
-      "order": 7
+      "order": 9
     },
     {
       "id": "landcover_subclass_outline",
@@ -289,28 +310,7 @@
           "recreation_ground"
         ]
       ],
-      "order": 8
-    },
-    {
-      "id": "landcover_ice",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "landcover",
-      "minzoom": 5,
-      "paint": {
-        "fill-color": "#ddecec",
-        "fill-antialias": false
-      },
-      "metadata": {},
-      "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "ice"
-        ]
-      ],
-      "order": 9
+      "order": 10
     },
     {
       "id": "landcover_ice_outline",
@@ -362,7 +362,7 @@
           "ice"
         ]
       ],
-      "order": 10
+      "order": 11
     }
   ]
 }
