@@ -4,18 +4,19 @@
       "id": "hillshading",
       "source": "dem",
       "type": "hillshade",
-      "minzoom": 3,
+      "minzoom": 4,
       "maxzoom": 11,
       "paint": {
+        "hillshade-method": "igor",
         "hillshade-exaggeration": {
           "stops": [
             [
-              6,
-              0.7
+              3,
+              0
             ],
             [
-              10,
-              0.5
+              9,
+              0.1
             ],
             [
               14,

@@ -1,0 +1,54 @@
+I wonder if I can make a contribution to OSM I can then turn into a boulder dataset?
+Tagging
+    Relevant OSM tags:
+        - https://wiki.openstreetmap.org/wiki/Tag:natural%3Dstone
+          A large (whatever that might mean) natural boulder or rock fragment that is not attached to the underlying terrain.
+        - https://wiki.openstreetmap.org/wiki/Tag:natural%3Drock
+          A notable rock feature or small group of rocks, attached to the underlying bedrock, mostly used on a single node element.
+        - https://wiki.openstreetmap.org/wiki/Tag:natural%3Dbare_rock
+          An area of bare rock is sparsely vegetated or not vegetated at all, so that the solid bedrock becomes visible.
+        - https://wiki.openstreetmap.org/wiki/Tag:natural%3Dblockfield
+          A surface covered by boulder- or block-sized rocks. Blockfields differ from screes and talus slope in that blockfields do not apparently originate from mass wastings.
+        - https://wiki.openstreetmap.org/wiki/Tag:natural%3Dscree
+          Scree is an accumulation of unconsolidated angular stones. Scree is formed by rockfall from adjacent rock faces
+          and often accumulates in the form of sloped cones called talus. Scree consists of rock fragments with sharp edges
+          that can vary in size from millimetres to meters.
+    Currently there isn't much tagged besides bare_rock and scree
+        A query of Cairngorms National Park for blockfield|stone|rock returns 12 nodes, 54 ways, 0 relations. https://overpass-turbo.eu/s/25ts
+    There was a suggestion to use natural=scree surface=boulders for large scree but this isn't in use
+        A query of Britain for natural=screen and any surface tag returns 0 nodes, 2 ways, 1 relation
+I can visually distinguish large rocks in scree on Bing Aerial but not Mapbox Satellite
+Bing has more shadows, I'm not sure if I can detect in shadowed areas.
+In random samples of Scotland bing aerial appears to have "high" (zoom 14+) accuracy, or ~1:10k
+    e.g. https://ant.dev.openstreetmap.org/bingimageanalyzer/?lat=57.841132&lon=-4.885999&zoom=17&l=bing
+I don't know if the OS agreement with Bing would allow using their key to bulk-analyze imagery
+TODO: Write up a thought-through plan and ask on the forum?
+
+Sources I've considered:
+
+- OpenStreetMap
+    Pretty precise and accurate in core countries
+        https://www.sciencedirect.com/science/article/abs/pii/S0143622822001138
+    Unfortunately does not include boulders
+
+- CLC+ (Issue: "Non and sparely vegetated" is too broad)
+    https://land.copernicus.eu/en/map-viewer?dataset=1c3f3e078a844661bbe23db99bdc8e2c
+    10 m
+    EU
+    2018 (forever, as UK no longer included)
+    11 basic land cover classes
+
+- CORINE (Issue: Not precise enough)
+    https://land.copernicus.eu/en/map-viewer?dataset=1c3f3e078a844661bbe23db99bdc8e2c
+    100 m, Minimum Mapping Unit of 25 ha for areal phenomena and a Minimum Mapping Width of 100 m for linear phenomena
+    Europe including UK
+    2018
+    Older, valued for consistent classes over time
+    44 thematic classes
+
+- UK Centre for Ecology & Hydrology Land Cover Maps (Issue: "inland rock" is too broad)
+    **FREE FOR NON-COMMERCIAL USE ONLY**
+    https://www.ceh.ac.uk/sites/default/files/2024-06/LCM2023ProductDocumentation.pdf
+    10 m
+    Great Britain and Northern Ireland
+    2023

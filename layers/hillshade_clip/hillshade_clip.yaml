@@ -1,0 +1,9 @@
+layer:
+  id: hillshade_clip
+  description: A polygon with a hole slightly smaller than the hillshading bounds
+  buffer_size: 4
+  datasource:
+    geometry_field: geom
+    query: (SELECT geom FROM layer_hillshade_clip()) as t
+schema:
+  - ./layer_hillshade_clip.sql

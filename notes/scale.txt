@@ -1,0 +1,5 @@
+I would like to be able to display scale in paper map terms (e.g. 1:10k) in the corner in a scale control that also
+has a fixed-size bar
+
+https://learn.microsoft.com/en-us/bingmaps/articles/understanding-scale-and-resolution?redirectedfrom=MSDN
+    1 : `devicePixelRatio * 96 * 39.37 * 156543.04 * Math.cos(latitude) / Math.pow(2, zoom)`

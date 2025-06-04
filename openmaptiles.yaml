@@ -1,5 +1,6 @@
 tileset:
   layers:
+    - layers/hillshade_clip/hillshade_clip.yaml
     - layers/filled_contours/filled_contours.yaml
     - layers/water/water.yaml
     - layers/waterway/waterway.yaml
@@ -15,6 +16,7 @@ tileset:
     - layers/park/park.yaml
     - layers/boundary/boundary.yaml
     - layers/aeroway/aeroway.yaml
+#    - layers/power/power.yaml
     - layers/transportation/transportation.yaml
     - layers/building/building.yaml
     - layers/transportation_name/transportation_name.yaml

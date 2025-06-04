@@ -15,7 +15,7 @@ with open("/style/hillshading_layer.json") as f:
 new_layers = []
 did_include_hillshading = False
 for layer in style["layers"]:
-    if layer["id"] == "landcover_subclass_patterns":
+    if layer["id"] == "hillshade_clip":
         did_include_hillshading = True
         for extra_layer in hillshading["layers"]:
             new_layers.append(extra_layer)

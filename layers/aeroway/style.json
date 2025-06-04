@@ -72,7 +72,7 @@
           "runway"
         ]
       ],
-      "order": 28
+      "order": 29
     },
     {
       "id": "aeroway_taxiway",
@@ -114,7 +114,7 @@
           "taxiway"
         ]
       ],
-      "order": 29
+      "order": 30
     },
     {
       "id": "airport_label",
@@ -157,7 +157,7 @@
           "taxiway"
         ]
       ],
-      "order": 199
+      "order": 200
     },
     {
       "id": "airport_gate",
@@ -197,7 +197,7 @@
           "gate"
         ]
       ],
-      "order": 200
+      "order": 201
     }
   ]
 }

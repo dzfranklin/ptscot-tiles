@@ -10,7 +10,16 @@
       "paint": {
         "fill-opacity": {
           "base": 1,
-          "stops": [[3, 0], [10, 0.2]]
+          "stops": [
+            [
+              3,
+              0
+            ],
+            [
+              10,
+              0.2
+            ]
+          ]
         },
         "fill-color": "#f4bc8f"
       },

@@ -1,55 +1,80 @@
-Hillshadinging issues:
-    too strong: http://localhost:8080/styles/ptscot/?vector#10.96/56.5553/-4.1751
-    needs clipping
+Consider replacing filled contours with a color relief layer when maplibre 5.6 is released
+    https://github.com/MIERUNE/svelte-maplibre-gl/issues/109
 
-match water os labels to their geometries and give them a rotation?
+[ ] Check if OpenZoomStack is more precise than vmd
+
+Explore using OS Open Names instead of vmd
+    https://docs.os.uk/os-downloads/addressing-and-location/os-open-names
+    [ ] Match where possible to get orientation and text size
+
+Explore improving DoBIH display names
+    How many match OS Open Names? If most maybe contribute back and OS Name column
+    If not maybe contribute back a manual Display Name column where I use various sources to make the names as used in DoBIH except with accents
+
+power / pipeline (figure out better name)
+    [ ] pylons
+    [ ] wind turbines
+    [ ] pipeline (https://overpass-turbo.eu/s/25rE)
+    start with this pr, but pull much less much simpler: https://github.com/openmaptiles/openmaptiles/pull/1235
+
+contours:
+    [ ] change contours to grey on bare rock like harvey where intersects osm_landuse_polygon = bare_rock
+    [ ] drop contour lines if too close together like OS and Harvey
+
+add harvey-style large boulder, boulder field, scree
+    https://www.harveymaps.co.uk/acatalog/SW_legend.pdf
+
+check if landuse=forest vs natural=wood usefully lines up with plantations on harvey
+
+named place: water
+    [ ] style blue https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/code-lists/namedplaceclassification
+    [ ] match water os labels to their geometries and give them a rotation?
 
 How to get park boundaries?
-
-Lower than zoom 10 it would be nice to show simple poly hillshading like outdooractive does
-plus contours filled categorically like os does for the 125k product
-
-Look into categorically (or in a gradient) coloring dem pixels instead of filling contours.
-    might be more efficient at low zoom. might look better at high zoom.
-    might be more acceptable not to exactly match contours at high zoom
-
-show wind turbines at low zoom (below 10?)
-
-increase visibility of pylons
-
-filled contours based on gdal polygons for zooms 4,56,7,8,9,10
+    https://github.com/openmaptiles/openmaptiles/pull/1491
 
 paths
+    [ ] style tracks like OS or Harvey, not like roads as OSM does
+    include path descriptions for use in tooltip?
+    official flag?: https://github.com/openmaptiles/openmaptiles/pull/1707
+    https://gitlab.com/trailstash/openstyle#the-opentrailstash-osm-highway-classification-system
 
-Consider using OS data for everything walkhighlands does:
-https://www.walkhighlands.co.uk/news/walkhighlands-map-server-and-tiles/
-    OS data © Crown copyright and database right (2022)
-    This data is used for the contours, height data, all topographic data (crags etc), woodland & forests, water
-    features, settlements, roads, railways. The source data is available from the OS under the Open Government Licence
-    (OGL).
+[ ] public toilets
 
-    © OpenStreetMap contributors (2022)
-    This data is used for (most) paths, tracks, public toilets, footbridges, fords, wind turbines on these maps. The
-    source data is available from the OSM under the Open Database License (ODbL). As footpaths are crowd-sourced by
-    OpenStreetMap, they may not always exist on the ground.
+[ ] footbridges
+
+[ ] fords
+
+[ ] man_made=cairn
+
+[ ] survey points
+    man_made=survey_point
+    [ ] replace peak symbol if overlaps. (does simply making it the same size and having the text stay if symbol covered work?)
+
+towers & masts (figure out better name)
+    [ ] man_made=tower
+        (eg Cairngorm Weather Station https://www.openstreetmap.org/node/35925144 https://www.outdooractive.com/en/map/#area=*&bm=topo%3Atopo&caml=bsu,-lot3y,9g20fj,0,0&wt=56.889923,-3.615020&zc=16.29441,-3.6398,57.11632)
+
+    [ ] man_made=mast
+        not shown on OS or Harvey, but I think worth it?
+        (eg cell tower https://www.openstreetmap.org/node/7467830568)
+
+[ ] man_made=clearcut
+    https://overpass-turbo.eu/s/25rM
+    example from pentland hills: https://www.openstreetmap.org/way/56299685
+    Maybe show stumps instead of trees
+
+[ ] Replace buildings within built-up areas with a poly for the entire area
+    https://docs.os.uk/os-downloads/addressing-and-location/os-open-built-up-areas
+
+    The built-up poly needs to appear beneath parks and so on, so technically it will need to be its
+    own layer
+
+    [ ] Check if remaining buildings have significant house number coverage. If not drop layer
+
+maybe generally change landuse / landcover to separate layers to make it easier to work with
+    possibly start again from OSM OpenMapTiles style
 
 Create https://plantopo.com/about-this-map/ptscot (referenced in attribution). Detail methodology, sources as would be interesting/useful to users
 
-consider do I want OS terrain: https://www.ordnancesurvey.co.uk/products/os-terrain-50
-    breakline
-    ridges
-    formlines
-
-Consider Premium:
-    Maybe at low zooms (say <=14) make the map optionally pull in OS premium data
-    Note that OS allows allowing users to print for personal use!
-    Does an OS NGD tile have everything I want? https://docs.os.uk/osngd/getting-started/access-the-os-ngd-api/os-ngd-api-tiles/what-data-is-available
-    Or does it make more sense to bring in the actual OS Explorer at that point, then overlay trails etc?
-    NGD's demo style pulls contours from Open ZoomStack
-    On zoom<16 NGD has
-        same ornaments as vmd
-        same streams as vmd
-        lower resolution contours than terr50
-    On zoom>16 NGD has
-        field boundaries!
-        slightly higher resolution streams than Explorer
+Not available for download, but available as web api: https://land.copernicus.eu/en/products/european-image-mosaic/very-high-resolution-image-mosaic-2021-true-colour-2m

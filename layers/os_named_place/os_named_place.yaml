@@ -2,6 +2,7 @@ layer:
   id: "os_named_place"
   description: |
     [OS VectorMap Named Place](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/feature-types/namedplace)
+    except Populated Place as that is covered by the `place` layer.
   buffer_size: 4
   requires:
     layers:
@@ -19,9 +20,17 @@ layer:
     text_orientation: |
       Suggested text orientation (in degrees) to use for cartographic text placement of valley names,
       names of stretches of water and estuaries.
+    class:
+      description: |
+        [NamedPlaceClassification](https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/code-lists/namedplaceclassification)
+      values:
+        - Landform
+        - Woodland Or Forest
+        - Hydrography
+        - Landcover
   datasource:
     geometry_field: geometry
-    query: (SELECT geometry, distinctive_name, font_height, text_orientation FROM layer_os_named_place(!bbox!, z(!scale_denominator!))) as t
+    query: (SELECT geometry, distinctive_name, font_height, text_orientation, class FROM layer_os_named_place(!bbox!, z(!scale_denominator!))) as t
 schema:
   - ./link_dobih_os.sql
   - ./os_named_place.sql

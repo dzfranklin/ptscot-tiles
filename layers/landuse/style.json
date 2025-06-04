@@ -167,7 +167,7 @@
           "cemetery"
         ]
       ],
-      "order": 31
+      "order": 32
     },
     {
       "id": "landuse_class_outline",
@@ -313,7 +313,7 @@
           "dam"
         ]
       ],
-      "order": 32
+      "order": 33
     },
     {
       "id": "landuse_class_themepark",
@@ -363,7 +363,7 @@
           "zoo"
         ]
       ],
-      "order": 33
+      "order": 34
     }
   ]
 }

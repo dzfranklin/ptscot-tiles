@@ -1,0 +1,7 @@
+OS VectorMap District: This product is updated every six months in May and November.
+OS Terrain 50: This product is updated annually in July
+OS Open Built Up Areas: This product is updated every two years.
+OS Open Names: This product is updated quarterly in January, April, July, October.
+OSM: Geofabrik's extracts are updated daily
+DoBIH: No schedule, as of 2025 generally 1-3 times per year
+Natural Earth: Last release in 2018, last merged PR in 2022

@@ -140,7 +140,7 @@
           "ice"
         ]
       ],
-      "order": 8
+      "order": 9
     },
     {
       "id": "landcover_subclass_patterns",
@@ -259,7 +259,7 @@
           "wetland"
         ]
       ],
-      "order": 9
+      "order": 10
     },
     {
       "id": "landcover_subclass_outline",
@@ -310,7 +310,7 @@
           "recreation_ground"
         ]
       ],
-      "order": 10
+      "order": 11
     },
     {
       "id": "landcover_ice_outline",
@@ -362,7 +362,7 @@
           "ice"
         ]
       ],
-      "order": 11
+      "order": 12
     }
   ]
 }

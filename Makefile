@@ -244,7 +244,7 @@ export HELP_MESSAGE
 #
 
 .PHONY: all
-all: init-dirs build/mapping.yaml build-sql build-style
+all: init-dirs build/mapping.yaml build/rgb_dem_scotland.mbtiles build-sql build-style
 
 .PHONY: help
 help:
@@ -275,6 +275,9 @@ ifeq (,$(wildcard build/mapping.yaml))
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools bash -c \
 		'generate-imposm3 $(TILESET_FILE) > $@'
 endif
+
+build/rgb_dem_scotland.mbtiles:
+	cp data/os_terr50_gagg/rgb_dem_scotland.mbtiles build/
 
 .PHONY: build-sql
 build-sql: init-dirs
@@ -521,6 +524,7 @@ stop-postserve:
 
 .PHONY: start-maputnik
 start-maputnik: stop-maputnik start-postserve
+	$(DOCKER_COMPOSE_COMMAND) pull maputnik_editor
 	@echo " "
 	@echo "***********************************************************"
 	@echo "* "

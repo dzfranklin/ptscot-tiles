@@ -1,17 +1,23 @@
-CREATE OR REPLACE FUNCTION layer_os_named_place(bbox geometry,zoom_level integer)
+CREATE OR REPLACE FUNCTION layer_os_named_place(bbox geometry, zoom_level integer)
     RETURNS TABLE
             (
                 geometry         geometry,
                 distinctive_name text,
                 font_height      text,
-                text_orientation integer
+                text_orientation integer,
+                class            text
             )
 AS
 $$
-SELECT geometry, distinctive_name, font_height, text_orientation
+SELECT geometry,
+       distinctive_name,
+       font_height,
+       text_orientation,
+       classification as class
 FROM os_vmdvec_named_place
 WHERE geometry && bbox
   AND id NOT IN (SELECT os_id FROM dobih_os_link)
+  AND classification != 'Populated Place'
   AND CASE
           WHEN font_height = 'Extra Large' THEN zoom_level >= 8
           WHEN font_height = 'Large' THEN zoom_level >= 9

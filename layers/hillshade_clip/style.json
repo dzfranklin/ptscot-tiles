@@ -1,0 +1,15 @@
+{
+  "layers": [
+    {
+      "id": "hillshade_clip",
+      "source": "openmaptiles",
+      "source-layer": "hillshade_clip",
+      "type": "fill",
+      "minzoom": 4,
+      "paint": {
+        "fill-color": "#f2efe9"
+      },
+      "order": 8
+    }
+  ]
+}
