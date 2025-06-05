@@ -1,11 +1,20 @@
 Consider replacing filled contours with a color relief layer when maplibre 5.6 is released
     https://github.com/MIERUNE/svelte-maplibre-gl/issues/109
 
-[ ] Check if OpenZoomStack is more precise than vmd
-
-Explore using OS Open Names instead of vmd
+[ ] OS Open Names
     https://docs.os.uk/os-downloads/addressing-and-location/os-open-names
-    [ ] Match where possible to get orientation and text size
+    Many more points than vmd
+    BUT no waterway names (does have loch/lochan)
+    [ ] Match vmd where possible to get orientation and text size
+    [ ] style lake names blue (same as rivers)
+
+[ ] River name line layer
+    Use OS Open Rivers: https://docs.os.uk/os-downloads/networks/os-open-rivers
+    rivers links go a ways into lakes, but they get form=lake there
+    [ ] ignore form=lake
+    [ ] simplify the lines at every zoom
+    [ ] drop short lines based on zoom
+    [ ] add to about this map
 
 Explore improving DoBIH display names
     How many match OS Open Names? If most maybe contribute back and OS Name column
@@ -18,17 +27,13 @@ power / pipeline (figure out better name)
     start with this pr, but pull much less much simpler: https://github.com/openmaptiles/openmaptiles/pull/1235
 
 contours:
-    [ ] change contours to grey on bare rock like harvey where intersects osm_landuse_polygon = bare_rock
+    [ ] style contours grey like harvey on osm bare rock
     [ ] drop contour lines if too close together like OS and Harvey
 
 add harvey-style large boulder, boulder field, scree
+    Maybe to detect boulder fields from OS ornaments and have that override OSM scree tag
+    The problem is that scree and boulders can go together, but ornament doesn't include scree
     https://www.harveymaps.co.uk/acatalog/SW_legend.pdf
-
-check if landuse=forest vs natural=wood usefully lines up with plantations on harvey
-
-named place: water
-    [ ] style blue https://docs.os.uk/os-downloads/contextual-or-derived-mapping/os-vectormap-district/os-vectormap-district-technical-specification/code-lists/namedplaceclassification
-    [ ] match water os labels to their geometries and give them a rotation?
 
 How to get park boundaries?
     https://github.com/openmaptiles/openmaptiles/pull/1491
@@ -72,9 +77,32 @@ towers & masts (figure out better name)
 
     [ ] Check if remaining buildings have significant house number coverage. If not drop layer
 
-maybe generally change landuse / landcover to separate layers to make it easier to work with
+[ ] foreshore
+    use vmdvec.
+    example in OS: https://www.outdooractive.com/en/map/#area=*&bm=topo%3Atopo&caml=akh,-jok4r,99czak,0,0&wt=56.9904080,%20-3.6309988&zc=14.69714,-3.30585,55.99177
+
+[ ] look into whether you can see boundary lines in bing aerial
+
+[ ] look into digitizing old OS maps
+    Is it actually that much better than Open Data? The open ornaments are pretty good
+    https://maps.nls.uk/os/25k-gb-second/
+    Ornaments look very similar if you look at say https://maps.nls.uk/geo/explore/#zoom=14.0&lat=57.06000&lon=-3.73991&layers=193&b=OSLeisure&o=58
+        And that is an even older map!
+    Ben Macdui shows some differences though: https://maps.nls.uk/geo/explore/#zoom=16.1&lat=57.06828&lon=-3.68264&layers=193&b=OSLeisure&o=75
+    Maybe digitize to loose rock / boulders polys, I think those might be a pattern. See legend: https://maps.nls.uk/view/188140392
+    Bare rock cliff ornaments are mostly identical, maybe start there?
+    Maybe just match open polys to higher resolution digitized polys? Maybe by making a map of where there currently are ornaments and taking the union
+    But ofc the big issue is there have been significant improvements, especially considering the second edition isn't out of copyright in scotland
+
+[ ] redo landuse / landcover
+    maybe generally change landuse / landcover to separate layers to make it easier to work with
     possibly start again from OSM OpenMapTiles style
 
-Create https://plantopo.com/about-this-map/ptscot (referenced in attribution). Detail methodology, sources as would be interesting/useful to users
+[ ] look into eu-hydro river network
+
+[ ] use copernicus data for forest symbols
+    what symbol: https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover?tab=dominant_leaf_type
+    symbol density: https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2015
+    categorize into polygons
 
 Not available for download, but available as web api: https://land.copernicus.eu/en/products/european-image-mosaic/very-high-resolution-image-mosaic-2021-true-colour-2m

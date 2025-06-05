@@ -44,6 +44,13 @@ The contour lines included in OS Terrain 50 are comparable to the contours
 on an OS Landranger map. (That is more precise than I would expect contour
 lines generated from a 50-meter grid to be.)
 
+#### OS Open Rivers
+
+[OS Open Rivers](https://docs.os.uk/os-downloads/networks/os-open-rivers)
+provides an open dataset of the high-level view of watercourses in Great Britain.
+
+- **River names** (OS VectorMap District provides better river shapes but does not include names)
+
 ### OpenStreetMap
 
 [OpenStreetMap](https://www.openstreetmap.org/about) (OSM) is a free, editable

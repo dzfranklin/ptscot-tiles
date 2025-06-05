@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 set -euox pipefail
 
+set +e
+make stop-postserve
+make stop-tileserver
+set -e
+
 make start-db
 make start-maputnik
+make start-postserve
 make start-tileserver
 
 set +x

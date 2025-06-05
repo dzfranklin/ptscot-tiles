@@ -132,11 +132,13 @@ make import-wikidata
 
 ### Work on Layers
 Each time you modify a layer's `mapping.yaml` file or add new OSM tags, run `make` and `make import-osm` to recreate tables (potentially with additional data) in PostgreSQL. With the new data, there can be new Wikidata records also.
+Then run `make import-sql` to recreate generated data.
 ```
 make clean
 make
 make import-osm
 make import-wikidata
+make import-sql
 ```
 
 Each time you modify layer SQL code run `make` and `make import-sql`.

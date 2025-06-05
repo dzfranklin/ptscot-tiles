@@ -426,8 +426,12 @@ endif
 
 .PHONY: import-osm
 import-osm: all start-db-nowait
+	# Dropping the backup schema fixes an intermittent bug: cannot drop table backup.osm_landuse_polygon_gen_z10 because other objects depend on it in query SELECT DropGeometryTable('backup', 'osm_landuse_polygon_gen_z10');
 	@$(assert_area_is_given)
-	$(DOCKER_COMPOSE) $(DC_CONFIG_CACHE) run $(DC_OPTS_CACHE) openmaptiles-tools sh -c 'pgwait && import-osm $(PBF_FILE)'
+	$(DOCKER_COMPOSE) $(DC_CONFIG_CACHE) run $(DC_OPTS_CACHE) openmaptiles-tools sh -c '\
+		pgwait && \
+		psql.sh -c "DROP SCHEMA backup CASCADE" && \
+		import-osm $(PBF_FILE)'
 
 .PHONY: start-update-osm
 start-update-osm: start-db
@@ -597,7 +601,29 @@ download-british-national-grids: init-dirs
 	&& echo "British National Grids are ready" || echo "British National Grids already exists."'
 
 .PHONY: import-os
-import-os: import-os-terr50-gpkg import-os-terr50-grid import-os-vmdvec
+import-os: import-os-terr50-gpkg import-os-terr50-grid import-os-vmdvec import-os-oprvs
+
+.PHONY: download-os-oprvs
+download-os-oprvs: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_oprvs" ] && mkdir /export/os_oprvs && \
+	echo "Downloading OS Open Rivers..." && wget -qO /export/os_oprvs/oprvrs_gpkg_gb.zip --show-progress \
+    "https://api.os.uk/downloads/v1/products/OpenRivers/downloads?area=GB&format=GeoPackage&redirect" && \
+	echo "Unzipping OS Open Rivers..." && unzip -q /export/os_oprvs/oprvrs_gpkg_gb.zip -d /export/os_oprvs && rm /export/os_oprvs/oprvrs_gpkg_gb.zip || \
+	echo "OS OS Open Rivers already exists."'
+
+.PHONY: import-os-oprvs
+import-os-oprvs: download-os-oprvs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
+	echo "Importing OS Open Rivers (restricted to features intersecting Scotland)..."; \
+	for table in $$(sqlite3 /export/os_oprvs/Data/oprvrs_gb.gpkg "select table_name from gpkg_contents"); do \
+		nln="os_oprvs_""$$table"; \
+		echo "Importing $$table to $$nln..."; \
+		ogr2ogr $(OGR2OGR_PG_DST) /export/os_oprvs/Data/oprvrs_gb.gpkg "$$table" \
+			-nln "$$nln" -overwrite -t_srs epsg:3857 \
+			-spat_srs epsg:4326 -spat -10 54.56 0 61; \
+	done; \
+	echo "Imported OS Open Rivers." \
+	'
 
 .PHONY: download-os-vmdvec
 download-os-vmdvec: init-dirs

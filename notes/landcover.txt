@@ -16,12 +16,15 @@ Tagging
     Currently there isn't much tagged besides bare_rock and scree
         A query of Cairngorms National Park for blockfield|stone|rock returns 12 nodes, 54 ways, 0 relations. https://overpass-turbo.eu/s/25ts
     There was a suggestion to use natural=scree surface=boulders for large scree but this isn't in use
+        https://wiki.openstreetmap.org/wiki/Talk:Tag:natural%3Dscree
         A query of Britain for natural=screen and any surface tag returns 0 nodes, 2 ways, 1 relation
 I can visually distinguish large rocks in scree on Bing Aerial but not Mapbox Satellite
 Bing has more shadows, I'm not sure if I can detect in shadowed areas.
 In random samples of Scotland bing aerial appears to have "high" (zoom 14+) accuracy, or ~1:10k
     e.g. https://ant.dev.openstreetmap.org/bingimageanalyzer/?lat=57.841132&lon=-4.885999&zoom=17&l=bing
 I don't know if the OS agreement with Bing would allow using their key to bulk-analyze imagery
+Look into other bands.
+If I know an area is scree can I use blurry imagery to get the rock density / size?
 TODO: Write up a thought-through plan and ask on the forum?
 
 Sources I've considered:

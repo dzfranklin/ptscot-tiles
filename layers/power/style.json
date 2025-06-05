@@ -1,3 +1,28 @@
 {
-  "layers": []
+  "layers": [
+    {
+      "id": "todo_power_symbol",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "power",
+      "layout": {
+        "text-field": "X"
+      },
+      "order": 30
+    },
+    {
+      "id": "todo_power_line",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "power",
+      "order": 31
+    },
+    {
+      "id": "todo_power_poly",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "power",
+      "order": 32
+    }
+  ]
 }
