@@ -1,8 +1,11 @@
 ## Legend
 
-- <span style="color:#c7082f">Creag Meagaidh</span>&emsp;Munro &ndash; Scottish hill over 3000' (914m)
-- <span style="color:#e06d1a">Beinn Bhreac</span>&emsp;Corbett &ndash; Scottish hill over 2500' (762m)
-- <span style="color:#027f60">Groban</span>&emsp;Graham &ndash; Scottish hill over 600m (1969')
+- <span style="color:#c7082f">Creag Meagaidh</span>&emsp;Munro &ndash; Scottish
+  hill over 3000' (914m)
+- <span style="color:#e06d1a">Beinn Bhreac</span>&emsp;Corbett &ndash; Scottish
+  hill over 2500' (762m)
+- <span style="color:#027f60">Groban</span>&emsp;Graham &ndash; Scottish hill
+  over 600m (1969')
 
 ## Sources
 
@@ -24,7 +27,8 @@ OS VectorMap District is an open simple vector dataset with a nominal scale of
 - **Woodlands**  
   Small areas of woodland are omitted and small clearings in woodland are filled
 - **Ornaments**  
-  Simplified versions of artwork originally drawn on paper maps to depict coastal rocks, outcropping rocks, boulders, cartographic slopes, and scree
+  Simplified versions of artwork originally drawn on paper maps to depict
+  coastal rocks, outcropping rocks, boulders, cartographic slopes, and scree
 - **Spot heights**  
   Elevation measurement, in most cases at the summit of a hill or mountain
 - **Named places**  
@@ -36,20 +40,30 @@ OS VectorMap District is an open simple vector dataset with a nominal scale of
 is an open height dataset of contours with spot heights, breaklines, coastline,
 lakes, ridges, and formlines for Great Britain.
 
+The contours are more precise than the contours on a Landranger map but less
+precise than the contours on an Explorer map. That is more precise than contours
+generated from the accompanying grid would be.
+
+OS Terrain 50 contours (grey lines) compared to other maps:
+
+| <img src="terr50_contours_vs_explorer.jpg" style="width: 150px; height: 150px" alt="Terrain 50 contours vs Explorer"/> | <img src="terr50_contours_vs_landranger.jpg" style="width: 150px; height: 150px" alt="Terrain 50 contours vs Landranger"/> |
+|------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| OS Explorer                                                                                                            | OS Landranger                                                                                                              |
+
 - **Contour lines**
 - **Hillshading** (generated from grid data)
 - **Color relief** (generated from grid data)
 
-The contour lines included in OS Terrain 50 are comparable to the contours
-on an OS Landranger map. (That is more precise than I would expect contour
-lines generated from a 50-meter grid to be.)
+#### OS Open Names
 
-#### OS Open Rivers
+[OS Open Names](https://docs.os.uk/os-downloads/addressing-and-location/os-open-names)
+is a comprehensive dataset of place names, roads numbers and postcodes for Great Britain.
 
-[OS Open Rivers](https://docs.os.uk/os-downloads/networks/os-open-rivers)
-provides an open dataset of the high-level view of watercourses in Great Britain.
+OS Open Names compared to OS Explorer:
+<img alt="OS Open Names vs Explorer" src="opname_vs_explorer.jpg"/>
 
-- **River names** (OS VectorMap District provides better river shapes but does not include names)
+OS Open Names compared to OS Landranger:
+<img alt="OS Open Names vs Landranger" src="opname_vs_landranger.jpg"/>
 
 ### OpenStreetMap
 

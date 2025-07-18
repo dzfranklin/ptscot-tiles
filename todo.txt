@@ -6,15 +6,10 @@ Consider replacing filled contours with a color relief layer when maplibre 5.6 i
     Many more points than vmd
     BUT no waterway names (does have loch/lochan)
     [ ] Match vmd where possible to get orientation and text size
-    [ ] style lake names blue (same as rivers)
+    [ ] style river/lake names blue
+    [ ] center labels on any side of point I think to roughly match OS. at least long ones don't look right starting at the point
 
-[ ] River name line layer
-    Use OS Open Rivers: https://docs.os.uk/os-downloads/networks/os-open-rivers
-    rivers links go a ways into lakes, but they get form=lake there
-    [ ] ignore form=lake
-    [ ] simplify the lines at every zoom
-    [ ] drop short lines based on zoom
-    [ ] add to about this map
+[ ] Add walkhighlands links to dobih?
 
 Explore improving DoBIH display names
     How many match OS Open Names? If most maybe contribute back and OS Name column
@@ -99,10 +94,13 @@ towers & masts (figure out better name)
     possibly start again from OSM OpenMapTiles style
 
 [ ] look into eu-hydro river network
+    https://land.copernicus.eu/en/cart-downloads
 
 [ ] use copernicus data for forest symbols
     what symbol: https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover?tab=dominant_leaf_type
     symbol density: https://land.copernicus.eu/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2015
     categorize into polygons
 
-Not available for download, but available as web api: https://land.copernicus.eu/en/products/european-image-mosaic/very-high-resolution-image-mosaic-2021-true-colour-2m
+[ ] look into using scottish wetland inventory
+
+[ ] compare to opentopomap

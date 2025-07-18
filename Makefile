@@ -601,28 +601,28 @@ download-british-national-grids: init-dirs
 	&& echo "British National Grids are ready" || echo "British National Grids already exists."'
 
 .PHONY: import-os
-import-os: import-os-terr50-gpkg import-os-terr50-grid import-os-vmdvec import-os-oprvs
+import-os: import-os-terr50-gpkg import-os-terr50-grid import-os-vmdvec import-os-opname
 
-.PHONY: download-os-oprvs
-download-os-oprvs: init-dirs
-	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_oprvs" ] && mkdir /export/os_oprvs && \
-	echo "Downloading OS Open Rivers..." && wget -qO /export/os_oprvs/oprvrs_gpkg_gb.zip --show-progress \
-    "https://api.os.uk/downloads/v1/products/OpenRivers/downloads?area=GB&format=GeoPackage&redirect" && \
-	echo "Unzipping OS Open Rivers..." && unzip -q /export/os_oprvs/oprvrs_gpkg_gb.zip -d /export/os_oprvs && rm /export/os_oprvs/oprvrs_gpkg_gb.zip || \
-	echo "OS OS Open Rivers already exists."'
+.PHONY: download-os-opname
+download-os-opname: init-dirs
+	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '[ ! -d "/export/os_opname" ] && mkdir /export/os_opname && \
+	echo "Downloading OS Open Names..." && wget -qO /export/os_opname/opname_gpkg_gb.zip --show-progress \
+    "https://api.os.uk/downloads/v1/products/OpenNames/downloads?area=GB&format=GeoPackage&redirect" && \
+	echo "Unzipping OS Open Names..." && unzip -q /export/os_opname/opname_gpkg_gb.zip -d /export/os_opname && rm /export/os_opname/opname_gpkg_gb.zip || \
+	echo "OS OS Open Names already exists."'
 
-.PHONY: import-os-oprvs
-import-os-oprvs: download-os-oprvs
+.PHONY: import-os-opname
+import-os-opname: download-os-opname
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools sh -c '\
-	echo "Importing OS Open Rivers (restricted to features intersecting Scotland)..."; \
-	for table in $$(sqlite3 /export/os_oprvs/Data/oprvrs_gb.gpkg "select table_name from gpkg_contents"); do \
-		nln="os_oprvs_""$$table"; \
+	echo "Importing OS Open Names (restricted to features intersecting Scotland)..."; \
+	for table in $$(sqlite3 /export/os_opname/Data/opname_gb.gpkg "select table_name from gpkg_contents"); do \
+		nln="os_opname_""$$table"; \
 		echo "Importing $$table to $$nln..."; \
-		ogr2ogr $(OGR2OGR_PG_DST) /export/os_oprvs/Data/oprvrs_gb.gpkg "$$table" \
+		ogr2ogr $(OGR2OGR_PG_DST) /export/os_opname/Data/opname_gb.gpkg "$$table" \
 			-nln "$$nln" -overwrite -t_srs epsg:3857 \
 			-spat_srs epsg:4326 -spat -10 54.56 0 61; \
 	done; \
-	echo "Imported OS Open Rivers." \
+	echo "Imported OS Open Names." \
 	'
 
 .PHONY: download-os-vmdvec
